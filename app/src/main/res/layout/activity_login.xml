@@ -7,4 +7,142 @@
     android:layout_height="match_parent"
     tools:context=".Login">
 
+
+    <TextView
+        android:id="@+id/tvClubName2"
+        android:layout_width="412dp"
+        android:layout_height="101dp"
+        android:background="#1B2B5B"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Queens of the Court Tennis Club"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvClubName"
+        android:layout_width="412dp"
+        android:layout_height="101dp"
+        android:background="#1B2B5B"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Queens of the Court Tennis Club"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"
+        app:shapeAppearanceOverlay="@style/RoundImage"
+        tools:layout_editor_absoluteX="105dp"
+        tools:layout_editor_absoluteY="101dp" />
+
+    <EditText
+        android:id="@+id/etUser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="216dp"
+        android:background="#4DA3B4D3"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="Usuario"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvClubName"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="#4DA3B4D3"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etUser"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <CheckBox
+        android:id="@+id/cbRememberMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="208dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="Recordarme"
+        app:layout_constraintStart_toStartOf="@id/etPassword"
+        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#1B2B5B"
+        android:fontFamily="@font/montserrat_semibold"
+        android:padding="15dp"
+        android:text="Ingresar"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cbRememberMe"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="#1B2B5B"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="649dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sucursal Córdoba"
+        android:textColor="#FFFDFD"
+        android:fontFamily="@font/montserrat_semibold"
+        tools:layout_editor_absoluteX="159dp"
+        tools:layout_editor_absoluteY="696dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sucursal Cerro"
+        android:textColor="#FFFDFD"
+        android:fontFamily="@font/montserrat_semibold"
+        tools:layout_editor_absoluteX="159dp"
+        tools:layout_editor_absoluteY="665dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
