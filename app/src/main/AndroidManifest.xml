@@ -12,12 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidClubDeportivo"
         tools:targetApi="31">
+
+        <!-- Otras actividades -->
         <activity
             android:name=".Login"
             android:exported="false" />
-        <!-- Actividad principal con intent-filter para el launcher -->
         <activity
             android:name=".ImpresCarnet"
+            android:exported="false" />
+
+        <!-- Configurar Recibo como la actividad de lanzamiento -->
+        <activity
+            android:name=".ModificacionCliente"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,15 +31,12 @@
             </intent-filter>
         </activity>
 
-
+        <!-- Otras actividades -->
         <activity
             android:name=".Reportes2"
             android:exported="false" />
         <activity
             android:name=".Reportes"
-            android:exported="false" />
-        <activity
-            android:name=".Recibo"
             android:exported="false" />
         <activity
             android:name=".Pagar"
@@ -60,14 +63,16 @@
             android:name=".InscripcionCliente"
             android:exported="true" />
         <activity
-            android:name=".ModificacionCliente"
+            android:name=".Recibo"
             android:exported="false" />
         <activity
             android:name=".GestionCliente"
             android:exported="false" />
         <activity
             android:name=".Home"
-            android:exported="false" /> <!-- Meta-data -->
+            android:exported="false" />
+
+        <!-- Meta-data -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
