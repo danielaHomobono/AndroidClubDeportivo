@@ -125,32 +125,31 @@
                 android:padding="15dp"
                 android:layout_marginBottom="15dp"/>
 
+
             <CheckBox
                 android:id="@+id/cbInscribirSocio"
-                android:layout_width="wrap_content"
+                android:layout_width="242dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_semibold"
                 android:layout_gravity="center"
+                android:buttonTint="@color/checkbox_color"
+                android:fontFamily="@font/montserrat_semibold"
                 android:padding="10dp"
                 android:text="Inscribir socio"
                 android:textColor="#000000"
-                android:textSize="16sp"
-                android:buttonTint="@color/checkbox_color"/>
-
-
+                android:textSize="16sp" />
 
             <CheckBox
                 android:id="@+id/cbPresentoFichaMedica"
-                android:layout_width="173dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:buttonTint="@color/checkbox_color"
                 android:fontFamily="@font/montserrat_semibold"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="Presentó ficha médica"
                 android:textColor="#000000"
-                android:textSize="16sp"
-                android:buttonTint="@color/checkbox_color"/>
+                android:textSize="16sp" />
 
 
             <Button
