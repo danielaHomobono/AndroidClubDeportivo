@@ -23,7 +23,7 @@
 
         <!-- Configurar Recibo como la actividad de lanzamiento -->
         <activity
-            android:name=".GestionCliente"
+            android:name=".GestionPagos"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +42,7 @@
             android:name=".Pagar"
             android:exported="false" />
         <activity
-            android:name=".GestionPagos"
+            android:name=".GestionCliente"
             android:exported="false" />
         <activity
             android:name=".Profesores2"
