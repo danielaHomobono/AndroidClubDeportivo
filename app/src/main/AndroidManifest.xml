@@ -23,7 +23,7 @@
 
         <!-- Configurar Recibo como la actividad de lanzamiento -->
         <activity
-            android:name=".ModificacionCliente"
+            android:name=".InscripcionCliente"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +60,7 @@
             android:name=".GestionActividades"
             android:exported="false" />
         <activity
-            android:name=".InscripcionCliente"
+            android:name=".ModificacionCliente"
             android:exported="true" />
         <activity
             android:name=".Recibo"
