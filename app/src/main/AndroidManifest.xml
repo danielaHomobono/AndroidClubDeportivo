@@ -15,7 +15,7 @@
 
         <!-- Otras actividades -->
         <activity
-            android:name=".Loguin"
+            android:name=".InscripcionCliente"
             android:exported="false" />
         <activity
             android:name=".ImpresCarnet"
@@ -23,7 +23,7 @@
 
         <!-- Configurar Recibo como la actividad de lanzamiento -->
         <activity
-            android:name=".InscripcionCliente"
+            android:name=".Loguin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
