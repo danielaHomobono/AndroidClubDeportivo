@@ -104,10 +104,6 @@
                 android:popupBackground="#FFFFFF"
                 android:spinnerMode="dropdown" />
 
-
-            //ACÁ AGREGAR LA TARJETA QUE SE COMPLETA CON LOS DATOS
-
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/TarjetaInscripcion"
                 android:layout_width="match_parent"
@@ -183,14 +179,13 @@
                 </LinearLayout>
 
                 <ImageButton
-                    android:id="@+id/imageButton"
-                    android:layout_width="48dp"
-                    android:layout_height="45dp"
-                    android:background="#A3B4D3"
-                    android:tint="#1B2B5B"
-                    android:translationX="300dp"
-                    android:translationY="130dp"
-                    app:srcCompat="@android:drawable/ic_menu_share" />
+                    android:id="@+id/imageButton2"
+                    android:layout_width="79dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#A3B4D3"
+                    android:translationX="280dp"
+                    android:translationY="100dp"
+                    app:srcCompat="@drawable/share_icon" />
 
             </androidx.cardview.widget.CardView>
 
