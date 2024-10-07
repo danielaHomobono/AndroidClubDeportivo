@@ -73,7 +73,7 @@
                         android:textSize="18sp"
                         android:padding="10dp"
                         android:layout_marginLeft="55dp"
-                        android:layout_marginTop="40dp"
+
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat_semibold"
                         android:shadowColor="#000000"
@@ -97,9 +97,9 @@
                         android:layout_height="wrap_content"
                         android:text="Nombre: Emma Bertonazzi"
                         android:textSize="18sp"
-                        android:padding="10dp"
+                        android:padding="8dp"
                         android:layout_marginLeft="55dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="4dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat_semibold"/>
 
@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="Número de socio: 0123"
                         android:textSize="18sp"
-                        android:padding="10dp"
+                        android:padding="8dp"
                         android:layout_marginLeft="55dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat_semibold"/>
@@ -120,20 +120,21 @@
                         android:layout_height="wrap_content"
                         android:text="DNI: 12345678"
                         android:textSize="18sp"
-                        android:padding="10dp"
+                        android:padding="8dp"
                         android:layout_marginLeft="55dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat_semibold"/>
 
-                    <!-- New TextViews -->
+
                     <TextView
                         android:id="@+id/date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Fecha: 01/01/2024"
                         android:textSize="18sp"
-                        android:padding="10dp"
+                        android:padding="8dp"
                         android:layout_marginLeft="55dp"
+                        android:layout_marginTop="15dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat_semibold"/>
 
@@ -143,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:text="Actividad: Clases de Yoga"
                         android:textSize="18sp"
-                        android:padding="10dp"
+                        android:padding="8dp"
                         android:layout_marginLeft="55dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat_semibold"/>
@@ -154,7 +155,7 @@
                         android:layout_height="wrap_content"
                         android:text="Método de pago: Tarjeta"
                         android:textSize="18sp"
-                        android:padding="10dp"
+                        android:padding="8dp"
                         android:layout_marginLeft="55dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat_semibold"/>
@@ -165,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:text="Total: $1500"
                         android:textSize="18sp"
-                        android:padding="10dp"
+                        android:padding="8dp"
                         android:layout_marginLeft="55dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat_semibold"/>

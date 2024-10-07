@@ -89,7 +89,7 @@
                 android:backgroundTint="#1B2B5B"
                 android:fontFamily="@font/montserrat_semibold"
                 android:padding="20dp"
-                android:text="INSCRIBIR"
+                android:text="INGRESAR"
                 android:textSize="18sp"
                 app:cornerRadius="6dp" />
 
