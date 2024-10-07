@@ -7,7 +7,6 @@
     android:fillViewport="true">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,25 +16,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:background="#1B2B5B"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="30dp"
             android:paddingTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:paddingBottom="30dp">
 
             <!-- Texto del Header -->
             <TextView
                 android:id="@+id/headerTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_semibold"
                 android:text="Inscripción a Actividad"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:layout_marginLeft="15dp"
-                android:textStyle="bold"
-                android:fontFamily="@font/montserrat_semibold"/>
+                android:textStyle="bold" />
 
 
             <ImageButton
@@ -43,9 +42,9 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="30dp"
-                android:scaleType="fitCenter"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Ir a inicio"
+                android:scaleType="fitCenter"
                 android:src="@drawable/home_icon"
 
                 />
@@ -53,22 +52,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="622dp"
             android:orientation="vertical"
-            android:paddingBottom="2dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:paddingRight="20dp"
+            android:paddingBottom="2dp">
 
             <EditText
-                android:id="@+id/etFirstName"
+                android:id="@+id/etDocumentNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="DNI"
-                android:fontFamily="@font/montserrat_semibold"
-                android:inputType="textPersonName"
-                android:background="#4DA3B4D3"
-                android:padding="15dp"
                 android:layout_marginBottom="20dp"
+                android:background="#4DA3B4D3"
+                android:fontFamily="@font/montserrat_semibold"
+                android:hint="DNI"
+                android:inputType="textPersonName"
+                android:padding="15dp"
 
                 />
 
@@ -82,18 +81,9 @@
                 android:padding="15dp"
                 android:popupBackground="#FFFFFF"
                 android:spinnerMode="dropdown" />
+
             <Spinner
-                android:id="@+id/spinnerActividad"
-                android:layout_width="374dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/custom_spinner_background"
-                android:fontFamily="@font/montserrat_semibold"
-                android:padding="15dp"
-                android:popupBackground="#FFFFFF"
-                android:spinnerMode="dropdown" />
-            <Spinner
-                android:id="@+id/spinnerHorario"
+                android:id="@+id/spinnerActivity"
                 android:layout_width="374dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -103,30 +93,118 @@
                 android:popupBackground="#FFFFFF"
                 android:spinnerMode="dropdown" />
 
+            <Spinner
+                android:id="@+id/spinnerClassSchedules"
+                android:layout_width="374dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_spinner_background"
+                android:fontFamily="@font/montserrat_semibold"
+                android:padding="15dp"
+                android:popupBackground="#FFFFFF"
+                android:spinnerMode="dropdown" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/TarjetaInscripcion"
+                android:layout_width="match_parent"
+                android:layout_height="188dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:padding="15dp"
+                app:cardBackgroundColor="#A3B4D3"
+                app:cardCornerRadius="12dp">
 
 
-//ACÁ AGREGAR LA TARJETA QUE SE COMPLETA CON LOS DATOS
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="188dp"
+                    android:animationCache="false"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="216dp"
+                        android:layout_height="38dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Jane Doe"
+                        android:textColor="#FFFFFF"
+                        android:textSize="24sp" />
 
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Sede Cerro"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
 
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Clase individual de tenis"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Lunes y miércoles 10 am"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Prof. Zagordo"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="79dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#A3B4D3"
+                    android:translationX="280dp"
+                    android:translationY="100dp"
+                    app:srcCompat="@drawable/share_icon" />
+
+            </androidx.cardview.widget.CardView>
 
 
             <Button
-                android:id="@+id/btnSubscribe"
+                android:id="@+id/btnActivitySubscribe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
                 android:backgroundTint="#1B2B5B"
-                android:padding="20dp"
-                android:layout_marginTop="10dp"
-                android:text="INSCRIBIR"
                 android:fontFamily="@font/montserrat_semibold"
+                android:padding="20dp"
+                android:text="INSCRIBIR"
                 android:textSize="18dp"
                 app:cornerRadius="6dp"
 
                 />
         </LinearLayout>
     </LinearLayout>
-
 
 </ScrollView>
 

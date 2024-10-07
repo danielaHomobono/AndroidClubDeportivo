@@ -5,16 +5,91 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.widget.Spinner
+import android.text.Editable
+import android.widget.Button
+import android.text.TextWatcher
+import android.widget.EditText
+import android.widget.ArrayAdapter
+import android.util.Patterns
+import android.widget.Toast
 
 class InscripcionActividad : AppCompatActivity() {
+    private lateinit var etDocumentNumber: EditText
+    private lateinit var spinnerSede: Spinner
+    private lateinit var spinnerClassSchedules: Spinner
+    private lateinit var spinnerActivity: Spinner
+    private lateinit var btnActivitySubscribe: Button
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_inscripcion_actividad)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        initializeViews()
+        setupSpinner()
+        setupValidations()
+    }
+        private fun initializeViews() {
+            spinnerSede = findViewById(R.id.spinnerSede)
+            spinnerClassSchedules= findViewById(R.id.spinnerClassSchedules)
+            spinnerActivity= findViewById(R.id.spinnerActivity)
+            etDocumentNumber = findViewById(R.id.etDocumentNumber)
+            btnActivitySubscribe = findViewById(R.id.btnActivitySubscribe)
+        }
+    private fun setupSpinner() {
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.document_type_array,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSede.adapter = adapter
+    }
+
+    private fun setupValidations() {
+        // Validación para que el DNI solo acepte números
+        etDocumentNumber.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().isNotEmpty() && !s.toString().matches(Regex("^[0-9]+$"))) {
+                    etDocumentNumber.error = "Solo se permiten números"
+                    etDocumentNumber.setText(s.toString().replace(Regex("[^0-9]"), ""))
+                    etDocumentNumber.setSelection(etDocumentNumber.text.length)
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        btnActivitySubscribe.setOnClickListener {
+            if (validateForm()) {
+                // Aquí iría la lógica para procesar el formulario
+                Toast.makeText(this, "Formulario válido, procesando...", Toast.LENGTH_SHORT).show()
+            }
         }
     }
+    private fun validateForm(): Boolean {
+        var isValid = true
+
+
+        if (etDocumentNumber.text.toString().trim().isEmpty()) {
+            etDocumentNumber.error = "El número de documento es requerido"
+            isValid = false
+        } else if (etDocumentNumber.text.toString().length < 8) {
+            etDocumentNumber.error = "El número de documento debe tener al menos 8 dígitos"
+            isValid = false
+        }
+
+
+        return isValid
+    }
+ //       enableEdgeToEdge()
+   //     setContentView(R.layout.activity_inscripcion_actividad)
+     //   ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+       //     val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+         //   v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+           // insets
+        //}
+    //}
 }
