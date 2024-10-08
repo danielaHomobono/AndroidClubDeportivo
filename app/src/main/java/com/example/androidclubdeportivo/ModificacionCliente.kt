@@ -1,5 +1,6 @@
 package com.example.androidclubdeportivo
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Patterns
+import android.widget.ImageButton
 
 class ModificacionCliente : AppCompatActivity() {
 
@@ -23,7 +25,7 @@ class ModificacionCliente : AppCompatActivity() {
     private lateinit var cbInscribirSocio: CheckBox
     private lateinit var cbPresentoFichaMedica: CheckBox
     private lateinit var btnModification: Button
-
+    private lateinit var btnHome: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modificacion_cliente)
@@ -31,6 +33,7 @@ class ModificacionCliente : AppCompatActivity() {
         initializeViews()
         setupSpinner()
         setupValidations()
+        setupHomeButton()
     }
 
     private fun initializeViews() {
@@ -43,6 +46,7 @@ class ModificacionCliente : AppCompatActivity() {
         cbInscribirSocio = findViewById(R.id.cbInscribirSocio)
         cbPresentoFichaMedica = findViewById(R.id.cbPresentoFichaMedica)
         btnModification = findViewById(R.id.btnModification)
+        btnHome = findViewById(R.id.homeButton)
     }
 
     private fun setupSpinner() {
@@ -70,11 +74,20 @@ class ModificacionCliente : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
+
         btnModification.setOnClickListener {
             if (validateForm()) {
                 // Aquí iría la lógica para procesar el formulario
                 Toast.makeText(this, "Formulario válido, procesando...", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+    private fun setupHomeButton() {
+        btnHome.setOnClickListener {
+            val intent = Intent(this, Home::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            finish()
         }
     }
 

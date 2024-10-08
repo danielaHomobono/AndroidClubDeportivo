@@ -1,5 +1,6 @@
 package com.example.androidclubdeportivo
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +25,7 @@ class InscripcionCliente : AppCompatActivity() {
     private lateinit var cbInscribirSocio: CheckBox
     private lateinit var cbPresentoFichaMedica: CheckBox
     private lateinit var btnSubscribe: Button
+    private lateinit var btnHome: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,7 @@ class InscripcionCliente : AppCompatActivity() {
         initializeViews()
         setupSpinner()
         setupValidations()
+        setupHomeButton()
     }
 
     private fun initializeViews() {
@@ -43,6 +47,7 @@ class InscripcionCliente : AppCompatActivity() {
         cbInscribirSocio = findViewById(R.id.cbInscribirSocio)
         cbPresentoFichaMedica = findViewById(R.id.cbPresentoFichaMedica)
         btnSubscribe = findViewById(R.id.btnSubscribe)
+        btnHome = findViewById(R.id.homeButton)
     }
 
     private fun setupSpinner() {
@@ -75,6 +80,15 @@ class InscripcionCliente : AppCompatActivity() {
                 // Aquí iría la lógica para procesar el formulario
                 Toast.makeText(this, "Formulario válido, procesando...", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun setupHomeButton() {
+        btnHome.setOnClickListener {
+            val intent = Intent(this, Home::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            finish()
         }
     }
 
