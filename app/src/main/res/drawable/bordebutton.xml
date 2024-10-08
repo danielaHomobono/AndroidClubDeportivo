@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Fondo del botón (puedes cambiar el color si lo deseas) -->
+
+    <!-- Borde inferior -->
+    <item android:bottom="1dp">
+       <shape android:shape="rectangle">
+            <size android:height="20dp" />
+            <solid android:color="#B2B2B2" /> <!-- Color del borde inferior (rojo en este caso) -->
+        </shape>
+    </item>
+</layer-list>
+

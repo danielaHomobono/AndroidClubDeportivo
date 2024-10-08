@@ -86,7 +86,7 @@
                 android:orientation="vertical"
                 android:padding="15dp"
                 app:cardBackgroundColor="#A3B4D3"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="20dp">
 
 
                 <LinearLayout
