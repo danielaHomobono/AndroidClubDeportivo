@@ -1,10 +1,408 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profesores2">
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1B2B5B"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="30dp"
+            android:paddingTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <!-- Texto del Header -->
+            <TextView
+                android:id="@+id/headerTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Profesores"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:layout_marginLeft="15dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/montserrat_semibold"/>
+
+
+            <ImageButton
+                android:id="@+id/homeButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="30dp"
+                android:scaleType="fitCenter"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Ir a inicio"
+                android:src="@drawable/home_icon"
+                />
+        </LinearLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="370dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/imageView40"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/plus_square" />
+
+                <LinearLayout
+                    android:layout_width="273dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="0dp">
+
+                    <TextView
+                        android:id="@+id/textView41"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Homobono, Daniela"
+                        android:textColor="#1E1E1E"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/textView42"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Natación"
+                        android:textColor="#757575"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView43"
+                        android:layout_width="match_parent"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Nutrición"
+                        android:textColor="#757575" />
+
+                    <LinearLayout
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:background="#1B2B5B"
+                        app:cornerRadius="6dp"
+                        >
+
+                        <ImageButton
+                            android:id="@+id/whatsappButton2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/whatsapp_white_icon" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="WhatsApp"
+                            android:textColor="@android:color/white"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="14dp">
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="370dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/imageView46"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/plus_square" />
+
+                <LinearLayout
+                    android:layout_width="273dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="0dp">
+
+                    <TextView
+                        android:id="@+id/textView47"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Toranzo, Emira"
+                        android:textColor="#1E1E1E"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/textView48"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Matronatación"
+                        android:textColor="#757575"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView49"
+                        android:layout_width="match_parent"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Natación"
+                        android:textColor="#757575" />
+
+                    <LinearLayout
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:background="#1B2B5B"
+                        app:cornerRadius="6dp"
+                        >
+
+                        <ImageButton
+                            android:id="@+id/whatsappButton3"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/whatsapp_white_icon" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="WhatsApp"
+                            android:textColor="@android:color/white"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="14dp">
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="370dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/imageView50"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/plus_square" />
+
+                <LinearLayout
+                    android:layout_width="273dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="0dp">
+
+                    <TextView
+                        android:id="@+id/textView51"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Zagordo, Roma"
+                        android:textColor="#1E1E1E"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/textView52"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Nutrición"
+                        android:textColor="#757575"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView53"
+                        android:layout_width="match_parent"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Tenis"
+                        android:textColor="#757575" />
+
+                    <LinearLayout
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:background="#1B2B5B"
+                        app:cornerRadius="6dp"
+                        >
+
+                        <ImageButton
+                            android:id="@+id/whatsappButton4"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/whatsapp_white_icon" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="WhatsApp"
+                            android:textColor="@android:color/white"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="14dp">
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="370dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/imageView54"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/plus_square" />
+
+                <LinearLayout
+                    android:layout_width="273dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="0dp">
+
+                    <TextView
+                        android:id="@+id/textView55"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Hassen, Verónica"
+                        android:textColor="#1E1E1E"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/textView56"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Natación"
+                        android:textColor="#757575"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView57"
+                        android:layout_width="match_parent"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Tenis"
+                        android:textColor="#757575" />
+
+                    <LinearLayout
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:background="#1B2B5B"
+                        app:cornerRadius="6dp"
+                        >
+
+                        <ImageButton
+                            android:id="@+id/whatsappButton5"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/whatsapp_white_icon" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="WhatsApp"
+                            android:textColor="@android:color/white"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="14dp">
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
