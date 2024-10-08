@@ -1,6 +1,11 @@
 package com.example.androidclubdeportivo
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,5 +17,54 @@ class Home : AppCompatActivity() {
 
         setContentView(R.layout.activity_home)
 
+        val btnGestionClientes = findViewById<Button>(R.id.btnGestionClientes)
+        btnGestionClientes.setOnClickListener {
+            val intent = Intent(this, GestionCliente::class.java)
+            startActivity(intent)
+        }
+        val btnGestionActividades = findViewById<Button>(R.id.btnGestionActividades)
+        btnGestionActividades.setOnClickListener {
+            val intent = Intent(this, GestionActividades::class.java)
+            startActivity(intent)
+        }
+        val btnGestionPagos = findViewById<Button>(R.id.btnGestionPagos)
+        btnGestionPagos.setOnClickListener {
+            val intent = Intent(this, GestionPagos::class.java)
+            startActivity(intent)
+        }
+        val imglogout = findViewById<ImageView>(R.id.logout)
+        imglogout.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish() // Para cerrar la actividad actual
+        }
+        val sucursalCerro = findViewById<LinearLayout>(R.id.sucursal_cerro)
+        sucursalCerro.setOnClickListener {
+            sendEmail("sucursal.cerro@example.com")
+        }
+
+        // Enviar correo - Sucursal Córdoba
+        val sucursalCordoba = findViewById<LinearLayout>(R.id.sucursal_cordoba)
+        sucursalCordoba.setOnClickListener {
+            sendEmail("sucursal.cordoba@example.com")
+        }
+
+
+    }
+
+    private fun sendEmail(email: String) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+            putExtra(Intent.EXTRA_SUBJECT, "Consulta a la sucursal")
+            putExtra(Intent.EXTRA_TEXT, "Hola, me gustaría hacer una consulta.")
+        }
+
+        try {
+            startActivity(Intent.createChooser(intent, "Enviar email..."))
+        } catch (ex: android.content.ActivityNotFoundException) {
+            Toast.makeText(this, "No tienes clientes de correo instalados.", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 }
