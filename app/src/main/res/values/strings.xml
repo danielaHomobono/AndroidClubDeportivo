@@ -7,4 +7,36 @@
         <item>LE</item>
         <item>LC</item>
     </string-array>
+
+    <string-array name="profesor_apellido_array">
+        <item>Apellido</item>
+        <item>Hassen</item>
+        <item>Homobono</item>
+        <item>Toranzo</item>
+        <item>Zagordo</item>
+    </string-array>
+
+    <string-array name="profesor_dni_array">
+        <item>DNI</item>
+        <item>12345678</item>
+        <item>12345679</item>
+        <item>12345680</item>
+        <item>12345681</item>
+    </string-array>
+
+    <string-array name="profesor_actividad_array">
+        <item>Actividad</item>
+        <item>Tenis</item>
+        <item>Natacion</item>
+        <item>Matronatacion</item>
+        <item>Nutricion</item>
+    </string-array>
+
+    <string-array name="profesor_estado_array">
+        <item>Estado</item>
+        <item>Activo</item>
+        <item>Baja</item>
+        <item>Suspendido</item>
+    </string-array>
+
 </resources>
