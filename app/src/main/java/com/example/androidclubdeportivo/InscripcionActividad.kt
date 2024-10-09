@@ -1,5 +1,6 @@
 package com.example.androidclubdeportivo
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.ArrayAdapter
 import android.util.Patterns
+import android.widget.ImageButton
 import android.widget.Toast
 
 class InscripcionActividad : AppCompatActivity() {
@@ -20,6 +22,7 @@ class InscripcionActividad : AppCompatActivity() {
     private lateinit var spinnerClassSchedules: Spinner
     private lateinit var spinnerActivity: Spinner
     private lateinit var btnActivitySubscribe: Button
+    private lateinit var btnHome: ImageButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,16 +30,18 @@ class InscripcionActividad : AppCompatActivity() {
         setContentView(R.layout.activity_inscripcion_actividad)
 
         initializeViews()
+        setupHomeButton()
         setupSpinner()
         setupValidations()
     }
-        private fun initializeViews() {
-            spinnerSede = findViewById(R.id.spinnerSede)
-            spinnerClassSchedules= findViewById(R.id.spinnerClassSchedules)
-            spinnerActivity= findViewById(R.id.spinnerActivity)
-            etDocumentNumber = findViewById(R.id.etDocumentNumber)
-            btnActivitySubscribe = findViewById(R.id.btnActivitySubscribe)
-        }
+    private fun initializeViews() {
+        spinnerSede = findViewById(R.id.spinnerSede)
+        spinnerClassSchedules= findViewById(R.id.spinnerClassSchedules)
+        spinnerActivity= findViewById(R.id.spinnerActivity)
+        etDocumentNumber = findViewById(R.id.etDocumentNumber)
+        btnActivitySubscribe = findViewById(R.id.btnActivitySubscribe)
+        btnHome = findViewById(R.id.homeButton)
+    }
     private fun setupSpinner() {
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -84,12 +89,17 @@ class InscripcionActividad : AppCompatActivity() {
 
         return isValid
     }
- //       enableEdgeToEdge()
-   //     setContentView(R.layout.activity_inscripcion_actividad)
-     //   ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-       //     val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-         //   v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-           // insets
-        //}
-    //}
+    private fun setupHomeButton() {
+        btnHome.setOnClickListener {
+            val intent = Intent(this, Home::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            finish()
+        }
+
+    }
 }
+
+
+
+

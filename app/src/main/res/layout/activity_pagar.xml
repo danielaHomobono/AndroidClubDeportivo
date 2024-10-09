@@ -151,7 +151,7 @@
             </androidx.cardview.widget.CardView>
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/imageButtonqr"
                 android:layout_width="300dp"
                 android:layout_height="255dp"
                 android:layout_marginTop="12dp"

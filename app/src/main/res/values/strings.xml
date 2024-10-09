@@ -32,6 +32,18 @@
         <item>Nutricion</item>
     </string-array>
 
+    <string-array name="spinnerActivity">
+        <item>Tenis</item>
+        <item>Pilates</item>
+        <item>Natación</item>
+        <item>Boxeo</item>
+        <item>Hockey</item>
+        <item>Basquet</item>
+    </string-array>
+    <string-array name="spinnerSede">
+        <item>Cerro</item>
+        <item>Córdoba</item>
+    </string-array>
     <string-array name="profesor_estado_array">
         <item>Estado</item>
         <item>Activo</item>
