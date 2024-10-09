@@ -58,6 +58,16 @@
             android:paddingRight="20dp"
             android:paddingBottom="2dp">
 
+            <Spinner
+                android:id="@+id/spinnerDocumentType"
+                android:layout_width="374dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_spinner_background"
+                android:fontFamily="@font/montserrat_semibold"
+                android:padding="15dp"
+                android:popupBackground="#FFFFFF"
+                android:spinnerMode="dropdown" />
             <EditText
                 android:id="@+id/etDocumentNumber"
                 android:layout_width="match_parent"
@@ -65,7 +75,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="#4DA3B4D3"
                 android:fontFamily="@font/montserrat_semibold"
-                android:hint="DNI"
+                android:hint="Número de documento"
                 android:inputType="textPersonName"
                 android:padding="15dp"
 
@@ -93,16 +103,6 @@
                 android:popupBackground="#FFFFFF"
                 android:spinnerMode="dropdown" />
 
-            <Spinner
-                android:id="@+id/spinnerClassSchedules"
-                android:layout_width="374dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/custom_spinner_background"
-                android:fontFamily="@font/montserrat_semibold"
-                android:padding="15dp"
-                android:popupBackground="#FFFFFF"
-                android:spinnerMode="dropdown" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/TarjetaInscripcion"
