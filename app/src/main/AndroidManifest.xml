@@ -12,34 +12,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidClubDeportivo"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Pagar"
+            android:exported="false" />
         <!-- Otras actividades -->
         <activity
             android:name=".ModificacionCliente"
             android:exported="false" />
         <activity
             android:name=".ImpresCarnet"
-            android:exported="false" />
-
-        <!-- Configurar Recibo como la actividad de lanzamiento -->
+            android:exported="false" /> <!-- Configurar Recibo como la actividad de lanzamiento -->
         <activity
             android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Otras actividades -->
+        </activity> <!-- Otras actividades -->
         <activity
             android:name=".Reportes2"
             android:exported="false" />
         <activity
             android:name=".Reportes"
-            android:exported="false" />
-        <activity
-            android:name=".Pagar"
             android:exported="false" />
         <activity
             android:name=".GestionCliente"
@@ -70,9 +66,7 @@
             android:exported="false" />
         <activity
             android:name=".GestionPagos"
-            android:exported="false" />
-
-        <!-- Meta-data -->
+            android:exported="false" /> <!-- Meta-data -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
