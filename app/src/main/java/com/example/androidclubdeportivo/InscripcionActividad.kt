@@ -36,7 +36,7 @@ class InscripcionActividad : AppCompatActivity() {
     }
     private fun initializeViews() {
         spinnerSede = findViewById(R.id.spinnerSede)
-        spinnerClassSchedules= findViewById(R.id.spinnerClassSchedules)
+
         spinnerActivity= findViewById(R.id.spinnerActivity)
         etDocumentNumber = findViewById(R.id.etDocumentNumber)
         btnActivitySubscribe = findViewById(R.id.btnActivitySubscribe)

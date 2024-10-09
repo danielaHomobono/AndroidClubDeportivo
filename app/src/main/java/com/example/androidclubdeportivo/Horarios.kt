@@ -25,7 +25,7 @@ class Horarios : AppCompatActivity() {
 
     }
     private fun initializateViews(){
-        btnMonday=findViewById(R.id.btnMonday)
+
         btnHome = findViewById(R.id.homeButton)
     }
     private fun setupHomeButton() {
