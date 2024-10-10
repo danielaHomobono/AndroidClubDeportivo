@@ -2,6 +2,7 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -39,8 +40,8 @@
 
             <ImageButton
                 android:id="@+id/homeButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginRight="30dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Ir a inicio"
@@ -52,7 +53,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="622dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -68,18 +69,17 @@
                 android:padding="15dp"
                 android:popupBackground="#FFFFFF"
                 android:spinnerMode="dropdown" />
+
             <EditText
                 android:id="@+id/etDocumentNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="#4DA3B4D3"
+                android:hint="Número de Documento"
                 android:fontFamily="@font/montserrat_semibold"
-                android:hint="Número de documento"
-                android:inputType="textPersonName"
+                android:inputType="number"
+                android:background="#4DA3B4D3"
                 android:padding="15dp"
-
-                />
+                android:layout_marginBottom="15dp"/>
 
             <Spinner
                 android:id="@+id/spinnerSede"
@@ -102,6 +102,7 @@
                 android:padding="15dp"
                 android:popupBackground="#FFFFFF"
                 android:spinnerMode="dropdown" />
+
 
 
             <androidx.cardview.widget.CardView
@@ -185,7 +186,8 @@
                     android:backgroundTint="#A3B4D3"
                     android:translationX="280dp"
                     android:translationY="100dp"
-                    app:srcCompat="@drawable/share_icon" />
+                    app:srcCompat="@drawable/share_icon"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
             </androidx.cardview.widget.CardView>
 

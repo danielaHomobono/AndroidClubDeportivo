@@ -58,7 +58,7 @@ class Profesores : AppCompatActivity() {
 
         val adapterActividad = ArrayAdapter.createFromResource(
             this,
-            R.array.profesor_actividad_array,
+            R.array.actividad_array,
             android.R.layout.simple_spinner_item
         )
         adapterActividad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
