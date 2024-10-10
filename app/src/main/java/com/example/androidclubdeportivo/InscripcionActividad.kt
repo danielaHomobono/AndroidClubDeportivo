@@ -111,6 +111,8 @@ class InscripcionActividad : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSede.adapter = adapter
     }
+
+
     //Spinner Actividad
     private fun setupSpinnerActividad() {
         val adapter = ArrayAdapter.createFromResource(

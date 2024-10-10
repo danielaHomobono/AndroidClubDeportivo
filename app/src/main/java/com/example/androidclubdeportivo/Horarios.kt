@@ -33,6 +33,7 @@ class Horarios : AppCompatActivity() {
         btnHome = findViewById(R.id.homeButton)
         spinnerActivity = findViewById(R.id.spinnerActivity)
     }
+    
     private fun setupHomeButton() {
         btnHome.setOnClickListener {
             val intent = Intent(this, Home::class.java)
