@@ -30,7 +30,6 @@ class Profesores : AppCompatActivity() {
 
     private fun initializeViews() {
         spinnerApellido = findViewById(R.id.spinnerApellido)
-        spinnerDni = findViewById(R.id.spinnerDni)
         spinnerActividad = findViewById(R.id.spinnerActividad)
         spinnerEstado = findViewById(R.id.spinnerEstado)
         btnMostrar = findViewById(R.id.btnMostrar)
