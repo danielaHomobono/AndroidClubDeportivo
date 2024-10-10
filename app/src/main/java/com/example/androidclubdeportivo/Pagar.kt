@@ -28,6 +28,7 @@ class Pagar : AppCompatActivity() {
         initializeViews()
         setupHomeButton()
         setupSpinner()
+        setupValidations()
 
         // Obtener referencia del ImageButton
         val imageButtonQR = findViewById<ImageButton>(R.id.imageButtonqr)
