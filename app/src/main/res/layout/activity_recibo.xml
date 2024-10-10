@@ -174,7 +174,7 @@
             </ScrollView>
         </FrameLayout>
 
-        <!-- Botón de impresión (elevado) -->
+
         <Button
             android:id="@+id/btnSubscribe"
             android:layout_width="match_parent"

@@ -19,20 +19,14 @@ class InscripcionActividad : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inscripcion_actividad)
 
-        // Inicialización de las vistas
+
         initializeViews()
-
-        // Configuración del botón "Home"
         setupHomeButton()
-
-        // Configuración de los Spinners
         setupSpinner()
-
-        // Configuración de validaciones
         setupValidations()
     }
 
-    // Inicializa las vistas de la actividad
+
     private fun initializeViews() {
         spinnerSede = findViewById(R.id.spinnerSede)
         spinnerActivity = findViewById(R.id.spinnerActivity)
@@ -41,18 +35,18 @@ class InscripcionActividad : AppCompatActivity() {
         btnHome = findViewById(R.id.homeButton)
     }
 
-    // Configura el Spinner con los datos correspondientes
+
     private fun setupSpinner() {
-        // Adaptador para el spinner de sede
+
         val adapterSede = ArrayAdapter.createFromResource(
             this,
-            R.array.sede, // Reemplazar con el array de sede
+            R.array.sede,
             android.R.layout.simple_spinner_item
         )
         adapterSede.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSede.adapter = adapterSede
 
-        // Adaptador para el spinner de actividad
+
         val adapterActivity = ArrayAdapter.createFromResource(
             this,
             R.array.actividad_array, // Reemplazar con el array de actividad
@@ -62,7 +56,7 @@ class InscripcionActividad : AppCompatActivity() {
         spinnerActivity.adapter = adapterActivity
     }
 
-    // Configura las validaciones para el formulario
+
     private fun setupValidations() {
         // Validación para que el número de documento solo acepte números
         etDocumentNumber.addTextChangedListener(object : TextWatcher {
@@ -87,7 +81,7 @@ class InscripcionActividad : AppCompatActivity() {
         }
     }
 
-    // Valida los campos del formulario
+
     private fun validateForm(): Boolean {
         var isValid = true
 
@@ -103,7 +97,7 @@ class InscripcionActividad : AppCompatActivity() {
         return isValid
     }
 
-    // Configura el botón "Home" para ir a la pantalla principal
+
     private fun setupHomeButton() {
         btnHome.setOnClickListener {
             val intent = Intent(this, Home::class.java)

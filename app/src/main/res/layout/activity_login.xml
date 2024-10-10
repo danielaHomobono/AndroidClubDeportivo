@@ -105,6 +105,7 @@
             android:gravity="center">
 
             <LinearLayout
+                android:id="@+id/sucursal_cerro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -126,6 +127,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sucursal_cordoba"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -135,10 +137,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:text="Sucursal Cerro"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/montserrat_semibold"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"

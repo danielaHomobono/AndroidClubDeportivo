@@ -32,7 +32,7 @@ class Pagar : AppCompatActivity() {
         setupSpinner()
         setupValidations()
 
-        // Configura el ImageButton para el QR
+        //  para el QR
         val imageButtonQR = findViewById<ImageButton>(R.id.imageButtonQr)
         imageButtonQR.setOnClickListener {
             val url = "https://www.mercadopago.com/ficticio-pago"
@@ -41,11 +41,13 @@ class Pagar : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Configura el botón de pago
+
         btnSubscribe.setOnClickListener {
             if (etDocumentNumber.text.isNotEmpty()) {
-                // Aquí podrías agregar lógica adicional para registrar el pago
+
                 Toast.makeText(this, "Pago registrado con éxito", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, Recibo::class.java)
+                startActivity(intent)
             } else {
                 etDocumentNumber.error = "Por favor ingrese el número de documento"
             }
@@ -56,7 +58,7 @@ class Pagar : AppCompatActivity() {
         spinnerDocumentType = findViewById(R.id.spinnerDocumentType)
         etDocumentNumber = findViewById(R.id.etDocumentNumber)
         btnHome = findViewById(R.id.homeButton)
-        btnSubscribe = findViewById(R.id.btnSubscribe)  // Inicializa el botón de pago
+        btnSubscribe = findViewById(R.id.btnSubscribe)
     }
 
     private fun setupSpinner() {
