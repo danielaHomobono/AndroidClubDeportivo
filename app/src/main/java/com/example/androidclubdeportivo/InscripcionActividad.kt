@@ -33,10 +33,11 @@ class InscripcionActividad : AppCompatActivity() {
         setupHomeButton()
         setupSpinner()
         setupValidations()
+        setupSpinnerSede()
+        setupSpinnerActivity()
     }
     private fun initializeViews() {
         spinnerSede = findViewById(R.id.spinnerSede)
-        spinnerClassSchedules= findViewById(R.id.spinnerClassSchedules)
         spinnerActivity= findViewById(R.id.spinnerActivity)
         etDocumentNumber = findViewById(R.id.etDocumentNumber)
         btnActivitySubscribe = findViewById(R.id.btnActivitySubscribe)
@@ -97,6 +98,25 @@ class InscripcionActividad : AppCompatActivity() {
             finish()
         }
 
+    }
+    private fun setupSpinnerSede() {
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.spinner_sede_array,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSede.adapter = adapter
+    }
+
+    private fun setupSpinnerActivity() {
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.spinner_activity_array,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerActivity.adapter = adapter
     }
 }
 

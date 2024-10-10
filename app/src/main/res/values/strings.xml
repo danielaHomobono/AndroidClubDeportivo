@@ -32,7 +32,7 @@
         <item>Nutricion</item>
     </string-array>
 
-    <string-array name="spinnerActivity">
+    <string-array name="spinner_activity_array">
         <item>Tenis</item>
         <item>Pilates</item>
         <item>Natación</item>
@@ -40,7 +40,7 @@
         <item>Hockey</item>
         <item>Basquet</item>
     </string-array>
-    <string-array name="spinnerSede">
+    <string-array name="spinner_sede_array">
         <item>Cerro</item>
         <item>Córdoba</item>
     </string-array>
