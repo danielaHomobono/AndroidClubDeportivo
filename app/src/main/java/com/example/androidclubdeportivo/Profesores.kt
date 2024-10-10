@@ -12,7 +12,6 @@ import android.widget.ImageButton
 class Profesores : AppCompatActivity() {
 
     private lateinit var spinnerApellido: Spinner
-    private lateinit var spinnerDni: Spinner
     private lateinit var spinnerActividad: Spinner
     private lateinit var spinnerEstado: Spinner
     private lateinit var btnMostrar: Button
@@ -24,8 +23,8 @@ class Profesores : AppCompatActivity() {
 
         initializeViews()
         setupHomeButton()
-        setupSpinner()
-
+        setupSpinners()
+        setupMostrarButton()
     }
 
     private fun initializeViews() {
@@ -36,42 +35,21 @@ class Profesores : AppCompatActivity() {
         btnHome = findViewById(R.id.homeButton)
     }
 
+    private fun setupSpinners() {
+        setupSpinner(spinnerApellido, R.array.profesor_apellido_array)
+        setupSpinner(spinnerActividad, R.array.actividad_array)
+        setupSpinner(spinnerEstado, R.array.profesor_estado_array)
+    }
 
-    private fun setupSpinner() {
-        val adapterApellido = ArrayAdapter.createFromResource(
+    private fun setupSpinner(spinner: Spinner, arrayResourceId: Int) {
+        ArrayAdapter.createFromResource(
             this,
-            R.array.profesor_apellido_array,
+            arrayResourceId,
             android.R.layout.simple_spinner_item
-        )
-        adapterApellido.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerApellido.adapter = adapterApellido
-
-
-        val adapterDni = ArrayAdapter.createFromResource(
-            this,
-            R.array.profesor_dni_array,
-            android.R.layout.simple_spinner_item
-        )
-        adapterDni.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDni.adapter = adapterDni
-
-
-        val adapterActividad = ArrayAdapter.createFromResource(
-            this,
-            R.array.actividad_array,
-            android.R.layout.simple_spinner_item
-        )
-        adapterActividad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerActividad.adapter = adapterActividad
-
-
-        val adapterEstado = ArrayAdapter.createFromResource(
-            this,
-            R.array.profesor_estado_array,
-            android.R.layout.simple_spinner_item
-        )
-        adapterEstado.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerEstado.adapter = adapterEstado
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
     }
 
     private fun setupHomeButton() {
@@ -81,6 +59,15 @@ class Profesores : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
 
+    private fun setupMostrarButton() {
+        btnMostrar.setOnClickListener {
+            val apellido = spinnerApellido.selectedItem.toString()
+            val actividad = spinnerActividad.selectedItem.toString()
+            val estado = spinnerEstado.selectedItem.toString()
+            Toast.makeText(this, "Mostrando: $apellido, $actividad, $estado", Toast.LENGTH_SHORT).show()
+            // Add your logic here to show the selected information
+        }
     }
 }
