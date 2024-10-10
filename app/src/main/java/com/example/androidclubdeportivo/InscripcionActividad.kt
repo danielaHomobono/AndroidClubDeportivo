@@ -19,11 +19,11 @@ import android.widget.Toast
 class InscripcionActividad : AppCompatActivity() {
     private lateinit var etDocumentNumber: EditText
     private lateinit var spinnerSede: Spinner
-    private lateinit var spinnerClassSchedules: Spinner
+    private lateinit var spinnerDocumentType: Spinner
     private lateinit var spinnerActivity: Spinner
     private lateinit var btnActivitySubscribe: Button
     private lateinit var btnHome: ImageButton
-
+    private lateinit var spinnerActividad: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +33,18 @@ class InscripcionActividad : AppCompatActivity() {
         setupHomeButton()
         setupSpinner()
         setupValidations()
+        setupSpinnerSede()
+        setupSpinnerActividad()
     }
     private fun initializeViews() {
         spinnerSede = findViewById(R.id.spinnerSede)
-
+        spinnerDocumentType= findViewById(R.id.spinnerDocumentType)
         spinnerActivity= findViewById(R.id.spinnerActivity)
         etDocumentNumber = findViewById(R.id.etDocumentNumber)
         btnActivitySubscribe = findViewById(R.id.btnActivitySubscribe)
         btnHome = findViewById(R.id.homeButton)
     }
+    //Spinner tipo de documento
     private fun setupSpinner() {
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -49,7 +52,7 @@ class InscripcionActividad : AppCompatActivity() {
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerSede.adapter = adapter
+        spinnerDocumentType.adapter = adapter
     }
 
     private fun setupValidations() {
@@ -97,6 +100,26 @@ class InscripcionActividad : AppCompatActivity() {
             finish()
         }
 
+    }
+    //Spinner Sede
+    private fun setupSpinnerSede() {
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.sede,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSede.adapter = adapter
+    }
+    //Spinner Actividad
+    private fun setupSpinnerActividad() {
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.actividad_array,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerActividad.adapter = adapter
     }
 }
 
