@@ -66,8 +66,14 @@ class Profesores : AppCompatActivity() {
             val apellido = spinnerApellido.selectedItem.toString()
             val actividad = spinnerActividad.selectedItem.toString()
             val estado = spinnerEstado.selectedItem.toString()
-            Toast.makeText(this, "Mostrando: $apellido, $actividad, $estado", Toast.LENGTH_SHORT).show()
-            // Add your logic here to show the selected information
+
+            // Create an Intent to start Profesores2 activity
+            val intent = Intent(this, Profesores2::class.java).apply {
+                putExtra("APELLIDO", apellido)
+                putExtra("ACTIVIDAD", actividad)
+                putExtra("ESTADO", estado)
+            }
+            startActivity(intent)
         }
     }
 }
