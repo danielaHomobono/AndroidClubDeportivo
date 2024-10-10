@@ -23,26 +23,25 @@ class Pagar : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pagar) // Hace referencia al archivo XML que has mostrado
-
+        setContentView(R.layout.activity_pagar)
         initializeViews()
         setupHomeButton()
         setupSpinner()
 
         // Obtener referencia del ImageButton
-        val imageButtonQR = findViewById<ImageButton>(R.id.imageButtonqr)
+        val imageButtonQR = findViewById<ImageButton>(R.id.imageButtonQr)
 
-        // Configurar el OnClickListener para el botón QR
+
         imageButtonQR.setOnClickListener {
             // URL ficticia de Mercado Pago
             val url = "https://www.mercadopago.com/ficticio-pago"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
-            startActivity(intent) // Abre el navegador con la URL
+            startActivity(intent)
         }
 
 
-        }
+    }
     private fun initializeViews() {
         spinnerDocumentType = findViewById(R.id.spinnerDocumentType)
         etDocumentNumber = findViewById(R.id.etDocumentNumber)
@@ -69,7 +68,7 @@ class Pagar : AppCompatActivity() {
     }
 
     private fun setupValidations() {
-        // Validación para que el DNI solo acepte números
+
         etDocumentNumber.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isNotEmpty() && !s.toString().matches(Regex("^[0-9]+$"))) {
@@ -87,4 +86,3 @@ class Pagar : AppCompatActivity() {
 
 
 }
-
