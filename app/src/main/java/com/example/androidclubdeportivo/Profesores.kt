@@ -30,7 +30,6 @@ class Profesores : AppCompatActivity() {
 
     private fun initializeViews() {
         spinnerApellido = findViewById(R.id.spinnerApellido)
-        spinnerDni = findViewById(R.id.spinnerDni)
         spinnerActividad = findViewById(R.id.spinnerActividad)
         spinnerEstado = findViewById(R.id.spinnerEstado)
         btnMostrar = findViewById(R.id.btnMostrar)
@@ -59,7 +58,7 @@ class Profesores : AppCompatActivity() {
 
         val adapterActividad = ArrayAdapter.createFromResource(
             this,
-            R.array.profesor_actividad_array,
+            R.array.actividad_array,
             android.R.layout.simple_spinner_item
         )
         adapterActividad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

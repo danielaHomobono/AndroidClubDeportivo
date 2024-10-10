@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">AndroidClubDeportivo</string>
+    <string name="homobono_daniela">Homobono, Daniela</string>
+    <string name="nataci_n">Natación</string>
+    <string name="natacion">Natacion</string>
+    <string name="Nutricion">Nutricion</string>
+    <string name="tenis">Tenis</string>
 
     <string-array name="document_type_array">
         <item>Tipo de DNI</item>
@@ -24,7 +29,7 @@
         <item>12345681</item>
     </string-array>
 
-    <string-array name="profesor_actividad_array">
+    <string-array name="actividad_array">
         <item>Actividad</item>
         <item>Tenis</item>
         <item>Natacion</item>
@@ -32,18 +37,12 @@
         <item>Nutricion</item>
     </string-array>
 
-    <string-array name="spinnerActivity">
-        <item>Tenis</item>
-        <item>Pilates</item>
-        <item>Natación</item>
-        <item>Boxeo</item>
-        <item>Hockey</item>
-        <item>Basquet</item>
-    </string-array>
-    <string-array name="spinnerSede">
+
+    <string-array name="sede">
         <item>Cerro</item>
         <item>Córdoba</item>
     </string-array>
+
     <string-array name="profesor_estado_array">
         <item>Estado</item>
         <item>Activo</item>
