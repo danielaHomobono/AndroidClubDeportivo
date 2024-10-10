@@ -45,7 +45,7 @@ class Horarios : AppCompatActivity() {
     private fun setupSpinnerSede() {
         val adapter = ArrayAdapter.createFromResource(
             this,
-            R.array.spinner_sede_array,
+            R.array.sede,
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -54,7 +54,7 @@ class Horarios : AppCompatActivity() {
     private fun setupSpinnerActivity() {
         val adapter = ArrayAdapter.createFromResource(
             this,
-            R.array.spinner_activity_array,
+            R.array.actividad_array,
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

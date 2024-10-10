@@ -19,10 +19,10 @@ import android.widget.Toast
 class InscripcionActividad : AppCompatActivity() {
     private lateinit var etDocumentNumber: EditText
     private lateinit var spinnerSede: Spinner
-    private lateinit var spinnerClassSchedules: Spinner
     private lateinit var spinnerActivity: Spinner
     private lateinit var btnActivitySubscribe: Button
     private lateinit var btnHome: ImageButton
+    private lateinit var spinnerDocumentType: Spinner
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +42,7 @@ class InscripcionActividad : AppCompatActivity() {
         etDocumentNumber = findViewById(R.id.etDocumentNumber)
         btnActivitySubscribe = findViewById(R.id.btnActivitySubscribe)
         btnHome = findViewById(R.id.homeButton)
+
     }
     private fun setupSpinner() {
         val adapter = ArrayAdapter.createFromResource(
@@ -50,7 +51,7 @@ class InscripcionActividad : AppCompatActivity() {
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerSede.adapter = adapter
+        spinnerDocumentType.adapter = adapter
     }
 
     private fun setupValidations() {
@@ -102,7 +103,7 @@ class InscripcionActividad : AppCompatActivity() {
     private fun setupSpinnerSede() {
         val adapter = ArrayAdapter.createFromResource(
             this,
-            R.array.spinner_sede_array,
+            R.array.sede,
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -112,7 +113,7 @@ class InscripcionActividad : AppCompatActivity() {
     private fun setupSpinnerActivity() {
         val adapter = ArrayAdapter.createFromResource(
             this,
-            R.array.spinner_activity_array,
+            R.array.actividad_array,
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
