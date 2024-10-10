@@ -72,10 +72,10 @@ class InscripcionActividad : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        // Configura la validación y acción del botón de inscripción
+
         btnActivitySubscribe.setOnClickListener {
             if (validateForm()) {
-                // Lógica para procesar el formulario cuando es válido
+                // Lógica
                 Toast.makeText(this, "Formulario válido, procesando...", Toast.LENGTH_SHORT).show()
             }
         }
