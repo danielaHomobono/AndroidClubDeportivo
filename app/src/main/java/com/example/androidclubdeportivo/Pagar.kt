@@ -15,11 +15,14 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
+
+
 class Pagar : AppCompatActivity() {
 
     private lateinit var spinnerDocumentType: Spinner
-    private lateinit var btnHome: Button
+    private lateinit var btnHome: ImageButton
     private lateinit var etDocumentNumber: EditText
+    private lateinit var btnSubscribe: Button  // Botón de pago
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +30,11 @@ class Pagar : AppCompatActivity() {
         initializeViews()
         setupHomeButton()
         setupSpinner()
+        setupValidations()
 
-        // Obtener referencia del ImageButton
+        //  para el QR
         val imageButtonQR = findViewById<ImageButton>(R.id.imageButtonQr)
-
-
         imageButtonQR.setOnClickListener {
-            // URL ficticia de Mercado Pago
             val url = "https://www.mercadopago.com/ficticio-pago"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
@@ -41,14 +42,25 @@ class Pagar : AppCompatActivity() {
         }
 
 
+        btnSubscribe.setOnClickListener {
+            if (etDocumentNumber.text.isNotEmpty()) {
+
+                Toast.makeText(this, "Pago registrado con éxito", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, Recibo::class.java)
+                startActivity(intent)
+            } else {
+                etDocumentNumber.error = "Por favor ingrese el número de documento"
+            }
+        }
     }
+
     private fun initializeViews() {
         spinnerDocumentType = findViewById(R.id.spinnerDocumentType)
         etDocumentNumber = findViewById(R.id.etDocumentNumber)
         btnHome = findViewById(R.id.homeButton)
-
+        btnSubscribe = findViewById(R.id.btnSubscribe)
     }
-    //Spinner tipo de documento
+
     private fun setupSpinner() {
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -58,6 +70,7 @@ class Pagar : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerDocumentType.adapter = adapter
     }
+
     private fun setupHomeButton() {
         btnHome.setOnClickListener {
             val intent = Intent(this, Home::class.java)
@@ -68,7 +81,6 @@ class Pagar : AppCompatActivity() {
     }
 
     private fun setupValidations() {
-
         etDocumentNumber.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isNotEmpty() && !s.toString().matches(Regex("^[0-9]+$"))) {
@@ -81,8 +93,5 @@ class Pagar : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
-
     }
-
-
 }

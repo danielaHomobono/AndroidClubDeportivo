@@ -2,61 +2,63 @@ package com.example.androidclubdeportivo
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import android.widget.Spinner
 import android.text.Editable
-import android.widget.Button
 import android.text.TextWatcher
-import android.widget.EditText
-import android.widget.ArrayAdapter
-import android.util.Patterns
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 
 class InscripcionActividad : AppCompatActivity() {
+
     private lateinit var etDocumentNumber: EditText
     private lateinit var spinnerSede: Spinner
-    private lateinit var spinnerDocumentType: Spinner
     private lateinit var spinnerActivity: Spinner
     private lateinit var btnActivitySubscribe: Button
     private lateinit var btnHome: ImageButton
-    private lateinit var spinnerActividad: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inscripcion_actividad)
 
+
         initializeViews()
         setupHomeButton()
         setupSpinner()
         setupValidations()
-        setupSpinnerSede()
-        setupSpinnerActividad()
     }
+
+
     private fun initializeViews() {
         spinnerSede = findViewById(R.id.spinnerSede)
-        spinnerDocumentType= findViewById(R.id.spinnerDocumentType)
-        spinnerActivity= findViewById(R.id.spinnerActivity)
+        spinnerActivity = findViewById(R.id.spinnerActivity)
         etDocumentNumber = findViewById(R.id.etDocumentNumber)
         btnActivitySubscribe = findViewById(R.id.btnActivitySubscribe)
         btnHome = findViewById(R.id.homeButton)
     }
-    //Spinner tipo de documento
+
+
     private fun setupSpinner() {
-        val adapter = ArrayAdapter.createFromResource(
+
+        val adapterSede = ArrayAdapter.createFromResource(
             this,
-            R.array.document_type_array,
+            R.array.sede,
             android.R.layout.simple_spinner_item
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDocumentType.adapter = adapter
+        adapterSede.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSede.adapter = adapterSede
+
+
+        val adapterActivity = ArrayAdapter.createFromResource(
+            this,
+            R.array.actividad_array, // Reemplazar con el array de actividad
+            android.R.layout.simple_spinner_item
+        )
+        adapterActivity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerActivity.adapter = adapterActivity
     }
 
+
     private fun setupValidations() {
-        // Validación para que el DNI solo acepte números
+        // Validación para que el número de documento solo acepte números
         etDocumentNumber.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isNotEmpty() && !s.toString().matches(Regex("^[0-9]+$"))) {
@@ -70,17 +72,20 @@ class InscripcionActividad : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
+
         btnActivitySubscribe.setOnClickListener {
             if (validateForm()) {
-                // Aquí iría la lógica para procesar el formulario
+                // Lógica
                 Toast.makeText(this, "Formulario válido, procesando...", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
+
     private fun validateForm(): Boolean {
         var isValid = true
 
-
+        // Validación del número de documento
         if (etDocumentNumber.text.toString().trim().isEmpty()) {
             etDocumentNumber.error = "El número de documento es requerido"
             isValid = false
@@ -89,9 +94,10 @@ class InscripcionActividad : AppCompatActivity() {
             isValid = false
         }
 
-
         return isValid
     }
+
+
     private fun setupHomeButton() {
         btnHome.setOnClickListener {
             val intent = Intent(this, Home::class.java)
@@ -99,32 +105,5 @@ class InscripcionActividad : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-    }
-    //Spinner Sede
-    private fun setupSpinnerSede() {
-        val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.sede,
-            android.R.layout.simple_spinner_item
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerSede.adapter = adapter
-    }
-
-
-    //Spinner Actividad
-    private fun setupSpinnerActividad() {
-        val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.actividad_array,
-            android.R.layout.simple_spinner_item
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerActividad.adapter = adapter
     }
 }
-
-
-
-

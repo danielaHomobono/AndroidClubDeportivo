@@ -36,7 +36,7 @@ class Home : AppCompatActivity() {
         imglogout.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
-            finish() // Para cerrar la actividad actual
+            finish()
         }
         val sucursalCerro = findViewById<LinearLayout>(R.id.sucursal_cerro)
         sucursalCerro.setOnClickListener {

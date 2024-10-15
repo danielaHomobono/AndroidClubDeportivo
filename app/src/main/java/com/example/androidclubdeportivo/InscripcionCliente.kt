@@ -77,7 +77,7 @@ class InscripcionCliente : AppCompatActivity() {
 
         btnSubscribe.setOnClickListener {
             if (validateForm()) {
-                // Aquí iría la lógica para procesar el formulario
+
                 Toast.makeText(this, "Formulario válido, procesando...", Toast.LENGTH_SHORT).show()
             }
         }

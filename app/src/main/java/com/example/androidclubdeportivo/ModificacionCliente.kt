@@ -60,7 +60,7 @@ class ModificacionCliente : AppCompatActivity() {
     }
 
     private fun setupValidations() {
-        // Validación para que el DNI solo acepte números
+
         etDocumentNumber.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isNotEmpty() && !s.toString().matches(Regex("^[0-9]+$"))) {

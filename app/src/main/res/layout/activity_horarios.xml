@@ -2,6 +2,7 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -40,8 +41,8 @@
 
             <ImageButton
                 android:id="@+id/homeButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginRight="30dp"
                 android:scaleType="fitCenter"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -125,25 +126,21 @@
                             android:text="Lunes"
                             android:textColor="#757575"
                             android:textSize="16dp" />
-
                         <TextView
                             android:id="@+id/textView11"
-                            android:layout_width="match_parent"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="8 a 11 am"
-                            android:textAlignment="center"
                             android:textColor="#757575"
                             android:textSize="16dp" />
-
                         <TextView
                             android:id="@+id/textView12"
-                            android:layout_width="wrap_content"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="Prof. Zagordo"
                             android:textColor="#757575"
@@ -166,27 +163,25 @@
                             android:textSize="16dp" />
                         <TextView
                             android:id="@+id/textView14"
-                            android:layout_width="match_parent"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="13 a 15 pm"
-                            android:textAlignment="center"
                             android:textColor="#757575"
                             android:textSize="16dp" />
-
                         <TextView
                             android:id="@+id/textView15"
-                            android:layout_width="wrap_content"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="Prof. Zagordo"
                             android:textColor="#757575"
                             android:textSize="16dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -203,26 +198,25 @@
                             android:textSize="16dp" />
                         <TextView
                             android:id="@+id/textView17"
-                            android:layout_width="match_parent"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="8 a 11 am"
-                            android:textAlignment="center"
                             android:textColor="#757575"
                             android:textSize="16dp" />
-
                         <TextView
                             android:id="@+id/textView18"
-                            android:layout_width="wrap_content"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Homobono"
+                            android:text="Prof. Hassen"
                             android:textColor="#757575"
                             android:textSize="16dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -239,26 +233,25 @@
                             android:textSize="16dp" />
                         <TextView
                             android:id="@+id/textView20"
-                            android:layout_width="match_parent"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="14 a 18 pm"
-                            android:textAlignment="center"
                             android:textColor="#757575"
                             android:textSize="16dp" />
-
                         <TextView
                             android:id="@+id/textView21"
-                            android:layout_width="wrap_content"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Homobono"
+                            android:text="Prof. Hassen"
                             android:textColor="#757575"
                             android:textSize="16dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -275,19 +268,17 @@
                             android:textSize="16dp" />
                         <TextView
                             android:id="@+id/textView23"
-                            android:layout_width="match_parent"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="8 a 11 am"
-                            android:textAlignment="center"
                             android:textColor="#757575"
                             android:textSize="16dp" />
-
                         <TextView
                             android:id="@+id/textView24"
-                            android:layout_width="wrap_content"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/montserrat_semibold"
@@ -295,6 +286,7 @@
                             android:textColor="#757575"
                             android:textSize="16dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -311,19 +303,17 @@
                             android:textSize="16dp" />
                         <TextView
                             android:id="@+id/textView26"
-                            android:layout_width="match_parent"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="8 a 11 am"
-                            android:textAlignment="center"
                             android:textColor="#757575"
                             android:textSize="16dp" />
-
                         <TextView
                             android:id="@+id/textView27"
-                            android:layout_width="match_parent"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
@@ -332,6 +322,7 @@
                             android:textColor="#757575"
                             android:textSize="16dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -348,19 +339,17 @@
                             android:textSize="16dp" />
                         <TextView
                             android:id="@+id/textView29"
-                            android:layout_width="match_parent"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="8 a 11 am"
-                            android:textAlignment="center"
                             android:textColor="#757575"
                             android:textSize="16dp" />
-
                         <TextView
                             android:id="@+id/textView30"
-                            android:layout_width="match_parent"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
@@ -369,6 +358,7 @@
                             android:textColor="#757575"
                             android:textSize="16dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -385,19 +375,17 @@
                             android:textSize="16dp" />
                         <TextView
                             android:id="@+id/textView32"
-                            android:layout_width="match_parent"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="8 a 11 am"
-                            android:textAlignment="center"
                             android:textColor="#757575"
                             android:textSize="16dp" />
-
                         <TextView
                             android:id="@+id/textView33"
-                            android:layout_width="match_parent"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_weight="1"
@@ -432,5 +420,3 @@
 
 
 </ScrollView>
-
-
