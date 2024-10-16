@@ -18,10 +18,11 @@ class ClubDatabaseHelper(context: Context) :
             CREATE TABLE Clientes (
                 id_cliente INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre TEXT NOT NULL,
+                aoellido TEXT NOT NULL,
                 documento TEXT UNIQUE NOT NULL,
                 tipo_documento TEXT NOT NULL,
                 telefono TEXT,
-                email TEXT,
+                email TEXT UNIQUE,
                 direccion TEXT
             )
         """)
@@ -36,15 +37,17 @@ class ClubDatabaseHelper(context: Context) :
             )
         """)
 
-        // Tabla de Usuarios
+        // Tabla de Usuarios nota: no se si incluir: nombre TEXT NOT NULL,
         db.execSQL("""
-            CREATE TABLE Usuarios (
-                id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
-                nombre TEXT NOT NULL,
-                password TEXT NOT NULL,
-                tipo_usuario TEXT CHECK (tipo_usuario IN ('Admin', 'Cliente')) NOT NULL
-            )
-        """)
+    CREATE TABLE Usuarios (
+        id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,        
+        email TEXT UNIQUE NOT NULL,  -- Email para el inicio de sesión
+        password TEXT NOT NULL,  -- Debe almacenarse como un hash
+        tipo_usuario TEXT CHECK (tipo_usuario IN ('Admin', 'Cliente')) NOT NULL,
+        id_cliente INTEGER,  -- Relación con cliente si es un usuario tipo Cliente
+        FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente) ON DELETE SET NULL
+    )
+""")
 
         // Tabla de Sedes
         db.execSQL("""
@@ -134,7 +137,6 @@ class ClubDatabaseHelper(context: Context) :
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-
         db.execSQL("DROP TABLE IF EXISTS Pagos")
         db.execSQL("DROP TABLE IF EXISTS Cuotas")
         db.execSQL("DROP TABLE IF EXISTS Inscripciones")
