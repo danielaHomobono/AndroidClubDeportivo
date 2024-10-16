@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 class InscripcionActividad : AppCompatActivity() {
 
     private lateinit var etDocumentNumber: EditText
+    private lateinit var spinnerDocumentType: Spinner
     private lateinit var spinnerSede: Spinner
     private lateinit var spinnerActivity: Spinner
     private lateinit var btnActivitySubscribe: Button
@@ -28,6 +29,7 @@ class InscripcionActividad : AppCompatActivity() {
 
 
     private fun initializeViews() {
+         spinnerDocumentType = findViewById(R.id.spinnerDocumentType)
         spinnerSede = findViewById(R.id.spinnerSede)
         spinnerActivity = findViewById(R.id.spinnerActivity)
         etDocumentNumber = findViewById(R.id.etDocumentNumber)
@@ -38,6 +40,15 @@ class InscripcionActividad : AppCompatActivity() {
 
     private fun setupSpinner() {
 
+        val adapterDocumentType = ArrayAdapter.createFromResource(
+            this,
+            R.array.document_type_array,
+            android.R.layout.simple_spinner_item
+        )
+        adapterDocumentType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerDocumentType.adapter = adapterDocumentType
+
+        // Spinner Sede (Sede corregida)
         val adapterSede = ArrayAdapter.createFromResource(
             this,
             R.array.sede,
@@ -49,7 +60,7 @@ class InscripcionActividad : AppCompatActivity() {
 
         val adapterActivity = ArrayAdapter.createFromResource(
             this,
-            R.array.actividad_array, // Reemplazar con el array de actividad
+            R.array.actividad_array,
             android.R.layout.simple_spinner_item
         )
         adapterActivity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
