@@ -35,6 +35,7 @@
 
 
     <string-array name="sede">
+        <item>Sede</item>
         <item>Cerro</item>
         <item>Córdoba</item>
     </string-array>

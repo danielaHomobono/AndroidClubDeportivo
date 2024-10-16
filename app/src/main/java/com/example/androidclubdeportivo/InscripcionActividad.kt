@@ -48,6 +48,8 @@ class InscripcionActividad : AppCompatActivity() {
         adapterDocumentType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerDocumentType.adapter = adapterDocumentType
 
+        spinnerDocumentType.setSelection(0)
+
         // Spinner Sede (Sede corregida)
         val adapterSede = ArrayAdapter.createFromResource(
             this,
@@ -57,6 +59,8 @@ class InscripcionActividad : AppCompatActivity() {
         adapterSede.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSede.adapter = adapterSede
 
+        // Establecer la opción predeterminada "Sede"
+        spinnerSede.setSelection(0)  // Asegura que "Sede" aparezca al inicio
 
         val adapterActivity = ArrayAdapter.createFromResource(
             this,
