@@ -55,7 +55,7 @@ class Login : AppCompatActivity() {
         btnTogglePassword.setOnClickListener {
             if (etPassword.transformationMethod == PasswordTransformationMethod.getInstance()) {
                 etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                btnTogglePassword.setImageResource(R.drawable.ojo) // Use an "open eye" drawable
+                btnTogglePassword.setImageResource(R.drawable.close_eye) // Use an "open eye" drawable
             } else {
                 etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
                 btnTogglePassword.setImageResource(R.drawable.ojo) // Use the original "closed eye" drawable
