@@ -1,14 +1,12 @@
-package com.example.androidclubdeportivo
+package com.example.androidclubdeportivo.controller
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageButton
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.androidclubdeportivo.R
 
 class Recibo : AppCompatActivity() {
 

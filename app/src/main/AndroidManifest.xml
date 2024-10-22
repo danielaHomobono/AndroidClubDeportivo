@@ -13,17 +13,17 @@
         android:theme="@style/Theme.AndroidClubDeportivo"
         tools:targetApi="31">
         <activity
-            android:name=".Pagar"
+            android:name=".controller.Pagar"
             android:exported="false" />
         <!-- Otras actividades -->
         <activity
-            android:name=".ModificacionCliente"
+            android:name=".controller.ModificacionCliente"
             android:exported="false" />
         <activity
-            android:name=".ImpresCarnet"
+            android:name=".controller.ImpresCarnet"
             android:exported="false" /> <!-- Configurar Recibo como la actividad de lanzamiento -->
         <activity
-            android:name=".Login"
+            android:name=".controller.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,40 +32,40 @@
             </intent-filter>
         </activity> <!-- Otras actividades -->
         <activity
-            android:name=".Reportes2"
+            android:name=".controller.Reportes2"
             android:exported="false" />
         <activity
-            android:name=".Reportes"
+            android:name=".controller.Reportes"
             android:exported="false" />
         <activity
-            android:name=".GestionCliente"
+            android:name=".controller.GestionCliente"
             android:exported="false" />
         <activity
-            android:name=".Profesores2"
+            android:name=".controller.Profesores2"
             android:exported="false" />
         <activity
-            android:name=".Profesores"
+            android:name=".controller.Profesores"
             android:exported="false" />
         <activity
-            android:name=".Horarios"
+            android:name=".controller.Horarios"
             android:exported="false" />
         <activity
-            android:name=".InscripcionActividad"
+            android:name=".controller.InscripcionActividad"
             android:exported="false" />
         <activity
-            android:name=".GestionActividades"
+            android:name=".controller.GestionActividades"
             android:exported="false" />
         <activity
-            android:name=".InscripcionCliente"
+            android:name=".controller.InscripcionCliente"
             android:exported="true" />
         <activity
-            android:name=".Recibo"
+            android:name=".controller.Recibo"
             android:exported="false" />
         <activity
-            android:name=".Home"
+            android:name=".controller.Home"
             android:exported="false" />
         <activity
-            android:name=".GestionPagos"
+            android:name=".controller.GestionPagos"
             android:exported="false" /> <!-- Meta-data -->
         <meta-data
             android:name="preloaded_fonts"

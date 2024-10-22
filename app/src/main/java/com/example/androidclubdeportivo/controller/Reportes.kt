@@ -1,4 +1,4 @@
-package com.example.androidclubdeportivo
+package com.example.androidclubdeportivo.controller
 
 
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androidclubdeportivo.R
 
 class Reportes : AppCompatActivity() {
 

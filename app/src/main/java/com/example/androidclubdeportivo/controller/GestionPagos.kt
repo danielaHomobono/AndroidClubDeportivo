@@ -1,4 +1,4 @@
-package com.example.androidclubdeportivo
+package com.example.androidclubdeportivo.controller
 
 import android.os.Bundle
 import android.widget.Button
@@ -6,6 +6,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import com.example.androidclubdeportivo.R
 
 class GestionPagos : AppCompatActivity() {
 

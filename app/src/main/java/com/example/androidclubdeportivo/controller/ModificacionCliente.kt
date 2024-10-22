@@ -1,4 +1,4 @@
-package com.example.androidclubdeportivo
+package com.example.androidclubdeportivo.controller
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +8,14 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Patterns
+import android.widget.ImageButton
+import com.example.androidclubdeportivo.R
 
-class InscripcionCliente : AppCompatActivity() {
+class ModificacionCliente : AppCompatActivity() {
 
     private lateinit var etFirstName: EditText
     private lateinit var etLastName: EditText
@@ -24,12 +25,11 @@ class InscripcionCliente : AppCompatActivity() {
     private lateinit var etPhoneNumber: EditText
     private lateinit var cbInscribirSocio: CheckBox
     private lateinit var cbPresentoFichaMedica: CheckBox
-    private lateinit var btnSubscribe: Button
+    private lateinit var btnModification: Button
     private lateinit var btnHome: ImageButton
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_inscripcion_cliente)
+        setContentView(R.layout.activity_modificacion_cliente)
 
         initializeViews()
         setupSpinner()
@@ -46,7 +46,7 @@ class InscripcionCliente : AppCompatActivity() {
         etPhoneNumber = findViewById(R.id.etPhoneNumber)
         cbInscribirSocio = findViewById(R.id.cbInscribirSocio)
         cbPresentoFichaMedica = findViewById(R.id.cbPresentoFichaMedica)
-        btnSubscribe = findViewById(R.id.btnSubscribe)
+        btnModification = findViewById(R.id.btnModification)
         btnHome = findViewById(R.id.homeButton)
     }
 
@@ -61,7 +61,7 @@ class InscripcionCliente : AppCompatActivity() {
     }
 
     private fun setupValidations() {
-        // Validación para que el DNI solo acepte números
+
         etDocumentNumber.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isNotEmpty() && !s.toString().matches(Regex("^[0-9]+$"))) {
@@ -75,14 +75,14 @@ class InscripcionCliente : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        btnSubscribe.setOnClickListener {
-            if (validateForm()) {
 
+        btnModification.setOnClickListener {
+            if (validateForm()) {
+                // Aquí iría la lógica para procesar el formulario
                 Toast.makeText(this, "Formulario válido, procesando...", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
     private fun setupHomeButton() {
         btnHome.setOnClickListener {
             val intent = Intent(this, Home::class.java)

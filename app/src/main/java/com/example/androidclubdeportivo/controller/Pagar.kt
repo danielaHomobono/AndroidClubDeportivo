@@ -1,4 +1,4 @@
-package com.example.androidclubdeportivo
+package com.example.androidclubdeportivo.controller
 
 
 
@@ -14,7 +14,7 @@ import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
+import com.example.androidclubdeportivo.R
 
 
 class Pagar : AppCompatActivity() {

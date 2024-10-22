@@ -1,13 +1,13 @@
-package com.example.androidclubdeportivo
+package com.example.androidclubdeportivo.controller
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androidclubdeportivo.R
 
 class GestionCliente : AppCompatActivity() {
     private lateinit var btnHome: ImageButton
