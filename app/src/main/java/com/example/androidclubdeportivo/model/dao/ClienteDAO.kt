@@ -122,7 +122,26 @@ fun actualizarCliente(cliente: Cliente): Boolean {
 
     return rowsAffected > 0
 }
+    fun searchClientesByApellido(apellido: String): List<Cliente> {
+        val db = dbHelper.readableDatabase
+        val cursor = db.query(
+            "Clientes",
+            null,
+            "apellido LIKE ?",
+            arrayOf("$apellido%"), // Changed to start with the input
+            null,
+            null,
+            "apellido ASC"
+        )
 
+        val clientes = mutableListOf<Cliente>()
+        while (cursor.moveToNext()) {
+            clientes.add(cursorToCliente(cursor))
+        }
+        cursor.close()
+
+        return clientes
+    }
 
 private fun cursorToCliente(cursor: Cursor): Cliente {
     return Cliente(

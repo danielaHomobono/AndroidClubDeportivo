@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Contenido principal con fondo -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,7 +20,6 @@
             android:paddingTop="20dp"
             android:paddingBottom="30dp">
 
-            <!-- Texto del Header -->
             <TextView
                 android:id="@+id/headerTitle"
                 android:layout_width="0dp"
@@ -45,6 +43,24 @@
                 android:src="@drawable/home_icon" />
         </LinearLayout>
 
+        <!-- Search field -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Buscar por apellido"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:padding="16dp"/>
+
+
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -52,13 +68,11 @@
             android:layout_weight="1"
             android:padding="20dp">
 
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/carnet" />
 
-            <!-- Scrollable Content -->
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -68,8 +82,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-
-                    <!-- Imagen circular del logo -->
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/logoImageView"
                         android:layout_width="200dp"
@@ -78,46 +90,43 @@
                         android:src="@drawable/logo"
                         app:shapeAppearanceOverlay="@style/RoundImage" />
 
-                    <!-- Datos del cliente -->
                     <TextView
                         android:id="@+id/clientName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nombre: Emma Bertonazzi"
+                        android:text="Nombre: "
                         android:textSize="18sp"
                         android:padding="10dp"
                         android:layout_marginLeft="55dp"
                         android:layout_marginTop="40dp"
                         android:textStyle="bold"
-                        android:fontFamily="@font/montserrat_semibold"/>/>
+                        android:fontFamily="@font/montserrat_semibold"/>
 
                     <TextView
                         android:id="@+id/memberNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Número de socio: 0123"
+                        android:text="Número de socio: "
                         android:textSize="18sp"
                         android:padding="10dp"
                         android:layout_marginLeft="55dp"
                         android:textStyle="bold"
-                        android:fontFamily="@font/montserrat_semibold"/>/>
+                        android:fontFamily="@font/montserrat_semibold"/>
 
                     <TextView
                         android:id="@+id/dniNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="DNI: 12345678"
+                        android:text="DNI: "
                         android:textSize="18sp"
                         android:padding="10dp"
                         android:layout_marginLeft="55dp"
                         android:textStyle="bold"
-                        android:fontFamily="@font/montserrat_semibold"/>/>
+                        android:fontFamily="@font/montserrat_semibold"/>
                 </LinearLayout>
             </ScrollView>
         </FrameLayout>
 
-
-        <!-- Botón de impresión (elevado) -->
         <Button
             android:id="@+id/btnSubscribe"
             android:layout_width="match_parent"

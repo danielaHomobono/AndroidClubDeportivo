@@ -45,13 +45,7 @@ class ModificacionCliente : AppCompatActivity() {
         setContentView(R.layout.activity_modificacion_cliente)
 
 
-        // Elimina o comenta estas líneas si no las necesitas
-        // clienteId = intent.getIntExtra("CLIENTE_ID", -1)
-        // if (clienteId == -1) {
-        //     Toast.makeText(this, "Error: No se proporcionó ID de cliente", Toast.LENGTH_LONG).show()
-        //     finish()
-        //     return
-        // }
+
 
 
         dbHelper = ClubDatabaseHelper(this)
