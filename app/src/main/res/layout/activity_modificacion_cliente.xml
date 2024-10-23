@@ -58,6 +58,15 @@
             android:paddingBottom="2dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteClientes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Buscar cliente por nombre o documento"
+                android:fontFamily="@font/montserrat_semibold"
+                android:background="#4DA3B4D3"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp"/>
 
             <EditText
                 android:id="@+id/etFirstName"
@@ -67,7 +76,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:inputType="textPersonName"
                 android:background="#4DA3B4D3"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:layout_marginBottom="20dp"
 
                 />
@@ -81,7 +90,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:hint="Apellido"
                 android:inputType="textPersonName"
-                android:padding="15dp" />
+                android:padding="10dp" />
             <Spinner
                 android:id="@+id/spinnerDocumentType"
                 android:layout_width="374dp"
@@ -89,7 +98,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_spinner_background"
                 android:fontFamily="@font/montserrat_semibold"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:popupBackground="#FFFFFF"
                 android:spinnerMode="dropdown" />
             <EditText
@@ -100,7 +109,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:inputType="number"
                 android:background="#4DA3B4D3"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:layout_marginBottom="15dp"/>
 
             <EditText
@@ -111,7 +120,7 @@
                 android:inputType="textEmailAddress"
                 android:background="#4DA3B4D3"
                 android:fontFamily="@font/montserrat_semibold"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:layout_marginBottom="15dp"/>
 
             <EditText
@@ -122,8 +131,31 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:inputType="phone"
                 android:background="#4DA3B4D3"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:layout_marginBottom="15dp"/>
+            <EditText
+                android:id="@+id/etUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Usuario"
+                android:fontFamily="@font/montserrat_semibold"
+                android:inputType="textPersonName"
+                android:background="#4DA3B4D3"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp"
+                />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contraseña"
+                android:fontFamily="@font/montserrat_semibold"
+                android:inputType="textPassword"
+                android:background="#4DA3B4D3"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp"
+                />
 
             <CheckBox
                 android:id="@+id/cbInscribirSocio"
