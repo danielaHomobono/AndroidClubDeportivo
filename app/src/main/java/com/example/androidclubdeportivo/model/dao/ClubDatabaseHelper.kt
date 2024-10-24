@@ -12,13 +12,12 @@ class ClubDatabaseHelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "ClubDeportivo.db"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
     }
 
     override fun onCreate(db: SQLiteDatabase) {
         Log.d("ClubDatabaseHelper", "Creando base de datos")
-        // ... (resto del código)
-        Log.d("ClubDatabaseHelper", "Base de datos creada exitosamente")
+
         // Tabla de Clientes
         db.execSQL(
             """
@@ -47,18 +46,18 @@ class ClubDatabaseHelper(context: Context) :
         """
         )
 
-        // Tabla de Usuarios nota: no se si incluir: nombre TEXT NOT NULL,
+        // Tabla de Usuarios
         db.execSQL(
             """
-    CREATE TABLE Usuarios (
-        id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,        
-        email TEXT UNIQUE NOT NULL,  -- Email para el inicio de sesión
-        password TEXT NOT NULL,  -- Debe almacenarse como un hash
-        tipo_usuario TEXT CHECK (tipo_usuario IN ('Admin', 'Cliente')) NOT NULL,
-        id_cliente INTEGER,  -- Relación con cliente si es un usuario tipo Cliente
-        FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente) ON DELETE SET NULL
-    )
-"""
+            CREATE TABLE Usuarios (
+                id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,        
+                email TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL,
+                tipo_usuario TEXT CHECK (tipo_usuario IN ('Admin', 'Cliente')) NOT NULL,
+                id_cliente INTEGER,
+                FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente) ON DELETE SET NULL
+            )
+        """
         )
 
         // Tabla de Sedes
@@ -102,15 +101,16 @@ class ClubDatabaseHelper(context: Context) :
         """
         )
 
-        // Tabla de Sesiones
+        // Tabla de Horarios de Actividades
         db.execSQL(
             """
-            CREATE TABLE Sesiones (
-                id_sesion INTEGER PRIMARY KEY AUTOINCREMENT,
+            CREATE TABLE HorariosActividad (
+                id_horario INTEGER PRIMARY KEY AUTOINCREMENT,
                 id_actividad INTEGER NOT NULL,
-                fecha DATE NOT NULL,
-                horario TEXT NOT NULL,
-                FOREIGN KEY (id_actividad) REFERENCES Actividades(id_actividad)
+                dia_semana TEXT NOT NULL,
+                hora_inicio TEXT NOT NULL,
+                hora_fin TEXT NOT NULL,
+                FOREIGN KEY (id_actividad) REFERENCES Actividades(id_actividad) ON DELETE CASCADE
             )
         """
         )
@@ -120,13 +120,13 @@ class ClubDatabaseHelper(context: Context) :
             """
             CREATE TABLE Inscripciones (
                 id_inscripcion INTEGER PRIMARY KEY AUTOINCREMENT,
-                id_socio INTEGER,
-                id_cliente INTEGER,
-                id_sesion INTEGER,
-                fecha DATE,
-                FOREIGN KEY (id_socio) REFERENCES Socios(id_socio),
+                id_cliente INTEGER NOT NULL,
+                id_actividad INTEGER NOT NULL,
+                id_horario INTEGER NOT NULL,
+                fecha DATE NOT NULL,
                 FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
-                FOREIGN KEY (id_sesion) REFERENCES Sesiones(id_sesion)
+                FOREIGN KEY (id_actividad) REFERENCES Actividades(id_actividad),
+                FOREIGN KEY (id_horario) REFERENCES HorariosActividad(id_horario)
             )
         """
         )
@@ -161,88 +161,162 @@ class ClubDatabaseHelper(context: Context) :
         """
         )
 
-
+        Log.d("ClubDatabaseHelper", "Base de datos creada exitosamente")
     }
-
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        if (oldVersion < 2) {
-            // Agrega la columna apellido si no existe
-            db.execSQL("ALTER TABLE Clientes ADD COLUMN apellido TEXT")
+        if (oldVersion < 3) {
+            // Crear la nueva tabla HorariosActividad si no existe
+            db.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS HorariosActividad (
+                    id_horario INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_actividad INTEGER NOT NULL,
+                    dia_semana TEXT NOT NULL,
+                    hora_inicio TEXT NOT NULL,
+                    hora_fin TEXT NOT NULL,
+                    FOREIGN KEY (id_actividad) REFERENCES Actividades(id_actividad) ON DELETE CASCADE
+                )
+            """
+            )
 
-            db.execSQL("DROP TABLE IF EXISTS Pagos")
-            db.execSQL("DROP TABLE IF EXISTS Cuotas")
-            db.execSQL("DROP TABLE IF EXISTS Inscripciones")
-            db.execSQL("DROP TABLE IF EXISTS Sesiones")
-            db.execSQL("DROP TABLE IF EXISTS Actividades")
-            db.execSQL("DROP TABLE IF EXISTS Profesores")
-            db.execSQL("DROP TABLE IF EXISTS Sedes")
-            db.execSQL("DROP TABLE IF EXISTS Socios")
-            db.execSQL("DROP TABLE IF EXISTS Usuarios")
-            db.execSQL("DROP TABLE IF EXISTS Clientes")
-            onCreate(db)
+            // Modificar la tabla Inscripciones para incluir id_horario
+            db.execSQL("ALTER TABLE Inscripciones ADD COLUMN id_horario INTEGER")
         }
     }
-        fun insertTestUser(email: String, password: String, tipoUsuario: String): Long {
-            val db = this.writableDatabase
+
+    // Métodos auxiliares
+
+    fun insertTestUser(email: String, password: String, tipoUsuario: String): Long {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put("email", email)
+            put("password", password)
+            put("tipo_usuario", tipoUsuario)
+        }
+        return db.insert("Usuarios", null, values)
+    }
+
+    fun printUsersTable() {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM Usuarios", null)
+        println("Contenido de la tabla Usuarios:")
+        while (cursor.moveToNext()) {
+            val id = cursor.getLong(cursor.getColumnIndex("id_usuario"))
+            val email = cursor.getString(cursor.getColumnIndex("email"))
+            val password = cursor.getString(cursor.getColumnIndex("password"))
+            val tipoUsuario = cursor.getString(cursor.getColumnIndex("tipo_usuario"))
+            println("ID: $id, Email: $email, Password: $password, Tipo: $tipoUsuario")
+        }
+        cursor.close()
+    }
+
+    fun insertUsuario(
+        email: String,
+        password: String,
+        tipoUsuario: String,
+        idCliente: Long?
+    ): Long {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put("email", email)
+            put("password", hashPassword(password))
+            put("tipo_usuario", tipoUsuario)
+            put("id_cliente", idCliente)
+        }
+        return db.insert("Usuarios", null, values)
+    }
+
+    fun isEmailRegistered(email: String): Boolean {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM Usuarios WHERE email = ?", arrayOf(email))
+        val exists = cursor.count > 0
+        cursor.close()
+        return exists
+    }
+
+    private fun hashPassword(password: String): String {
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(password.toByteArray())
+        return digest.fold("", { str, it -> str + "%02x".format(it) })
+    }
+    fun limpiarTablaSedes() {
+        val db = this.writableDatabase
+        db.delete("Sedes", null, null)
+        Log.d("ClubDatabaseHelper", "Tabla Sedes limpiada")
+    }
+    fun insertTestSedes() {
+        val db = this.writableDatabase
+        val sedes = listOf("Sucursal Cerro", "Sucursal Córdoba")
+
+        // Primero, limpia la tabla
+        limpiarTablaSedes()
+
+        for (sede in sedes) {
             val values = ContentValues().apply {
-                put("email", email)
-                put("password", password)  // Almacena la contraseña sin hashear
-                put("tipo_usuario", tipoUsuario)
+                put("nombre", sede)
+                put("direccion", "Dirección de $sede")
             }
-            return db.insert("Usuarios", null, values)
+            db.insert("Sedes", null, values)
+            Log.d("ClubDatabaseHelper", "Sede insertada: $sede")
         }
-
-        fun printUsersTable() {
-            val db = readableDatabase
-            val cursor = db.rawQuery("SELECT * FROM Usuarios", null)
-            println("Contenido de la tabla Usuarios:")
-            while (cursor.moveToNext()) {
-                val id = cursor.getLong(cursor.getColumnIndex("id_usuario"))
-                val email = cursor.getString(cursor.getColumnIndex("email"))
-                val password = cursor.getString(cursor.getColumnIndex("password"))
-                val tipoUsuario = cursor.getString(cursor.getColumnIndex("tipo_usuario"))
-                println("ID: $id, Email: $email, Password: $password, Tipo: $tipoUsuario")
-            }
-            cursor.close()
-            db.close()
-        }
-
-        fun insertUsuario(
-            email: String,
-            password: String,
-            tipoUsuario: String,
-            idCliente: Long?
-        ): Long {
-            val db = this.writableDatabase
-            val values = ContentValues()
-
-            values.put("email", email)
-            values.put("password", hashPassword(password)) // Almacenamos la contraseña con hash
-            values.put("tipo_usuario", tipoUsuario)
-            values.put("id_cliente", idCliente)
-
-            return db.insert("Usuarios", null, values)
-        }
-
-        fun isEmailRegistered(email: String): Boolean {
-            val db = this.readableDatabase
-            val cursor = db.rawQuery("SELECT * FROM Usuarios WHERE email = ?", arrayOf(email))
-            val exists = cursor.count > 0
-            cursor.close()
-            return exists
-        }
-
-        // Función para generar el hash de la contraseña
-        private fun hashPassword(password: String): String {
-            val md = MessageDigest.getInstance("SHA-256")
-            val digest = md.digest(password.toByteArray())
-            return digest.fold("", { str, it -> str + "%02x".format(it) })
-        }
-
-
     }
 
+    fun getAllSedes(): List<String> {
+        val sedesDeseadas = listOf("Sucursal Cerro", "Sucursal Córdoba")
+        val sedes = mutableListOf<String>()
+        val db = this.readableDatabase
+        val cursor = db.query(
+            "Sedes",
+            arrayOf("nombre"),
+            "nombre IN (?, ?)",
+            sedesDeseadas.toTypedArray(),
+            null,
+            null,
+            "nombre ASC"
+        )
 
+        while (cursor.moveToNext()) {
+            sedes.add(cursor.getString(0))
+        }
+        cursor.close()
+        Log.d("ClubDatabaseHelper", "Sedes obtenidas: $sedes")
+        return sedes
+    }
 
+    fun insertTestActividades() {
+        val db = this.writableDatabase
+        val actividades = listOf(
+            Triple("Yoga", 1, 1),
+            Triple("Pilates", 2, 2),
+            Triple("Spinning", 3, 3)
+        )
+        for ((nombre, idProfesor, idSede) in actividades) {
+            val values = ContentValues().apply {
+                put("nombre", nombre)
+                put("cupo", 20)
+                put("precio", 1000.0)
+                put("id_profesor", idProfesor)
+                put("id_sede", idSede)
+            }
+            db.insert("Actividades", null, values)
+        }
+        Log.d("ClubDatabaseHelper", "Actividades de prueba insertadas")
+    }
+    fun printAllTables() {
+        val tables = listOf("Sedes", "Actividades", "HorariosActividad", "Clientes", "Inscripciones")
+        val db = readableDatabase
+        for (table in tables) {
+            val cursor = db.rawQuery("SELECT * FROM $table", null)
+            Log.d("ClubDatabaseHelper", "Contenido de la tabla $table:")
+            while (cursor.moveToNext()) {
+                val rowData = (0 until cursor.columnCount).map {
+                    "${cursor.getColumnName(it)}: ${cursor.getString(it)}"
+                }.joinToString(", ")
+                Log.d("ClubDatabaseHelper", rowData)
+            }
+            cursor.close()
+        }
+    }
 
+}

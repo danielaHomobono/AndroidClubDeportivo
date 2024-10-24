@@ -46,5 +46,11 @@
         <item>Baja</item>
         <item>Suspendido</item>
     </string-array>
+    <string-array name="Horario">
+        <item>15</item>
+        <item>Activo</item>
+        <item>Baja</item>
+        <item>Suspendido</item>
+    </string-array>
 
 </resources>

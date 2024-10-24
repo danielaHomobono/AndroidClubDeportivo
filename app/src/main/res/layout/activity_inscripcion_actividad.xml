@@ -102,6 +102,16 @@
                 android:padding="15dp"
                 android:popupBackground="#FFFFFF"
                 android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/spinnerHorario"
+                android:layout_width="374dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_spinner_background"
+                android:fontFamily="@font/montserrat_semibold"
+                android:padding="15dp"
+                android:popupBackground="#FFFFFF"
+                android:spinnerMode="dropdown" />
 
 
 
