@@ -129,41 +129,6 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
         return rowsAffected > 0
     }
 
-    fun searchClientesByApellido(apellido: String): List<Cliente> {
-        val db = dbHelper.readableDatabase
-        val cursor = db.query(
-            "Clientes",
-            null,
-            "apellido LIKE ?",
-            arrayOf("$apellido%"), // Changed to start with the input
-            null,
-            null,
-            "apellido ASC"
-        )
-
-        val clientes = mutableListOf<Cliente>()
-        while (cursor.moveToNext()) {
-            clientes.add(cursorToCliente(cursor))
-        }
-        cursor.close()
-
-        return clientes
-    }
-
-    private fun cursorToCliente(cursor: Cursor): Cliente {
-        return Cliente(
-            id_cliente = cursor.getIntOrNull(cursor.getColumnIndexOrThrow("id_cliente")),
-            nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
-            apellido = cursor.getString(cursor.getColumnIndexOrThrow("apellido")),
-            documento = cursor.getString(cursor.getColumnIndexOrThrow("documento")),
-            tipo_documento = cursor.getString(cursor.getColumnIndexOrThrow("tipo_documento")),
-            telefono = cursor.getStringOrNull(cursor.getColumnIndexOrThrow("telefono")),
-            email = cursor.getStringOrNull(cursor.getColumnIndexOrThrow("email")),
-            direccion = cursor.getStringOrNull(cursor.getColumnIndexOrThrow("direccion"))
-        )
-    }
-
-
     fun getClienteByDocumento(tipoDocumento: String, numeroDocumento: String): Int? {
         val db = dbHelper.readableDatabase
         var clienteId: Int? = null
@@ -189,4 +154,47 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
         cursor.close()
         return clienteId
     }
+    fun obtenerClientePorDocumento(tipoDocumento: String, numeroDocumento: String): Cliente? {
+        val clienteId = getClienteByDocumento(tipoDocumento, numeroDocumento)
+        return clienteId?.let { getClienteById(it) } // Llama a getClienteById para obtener el objeto Cliente completo
+    }
+    fun searchClientesByApellido(apellido: String): List<Cliente> {
+        val db = dbHelper.readableDatabase
+        val cursor = db.query(
+            "Clientes",
+            null,
+            "apellido LIKE ?",
+            arrayOf("$apellido%"), // Changed to start with the input
+            null,
+            null,
+            "apellido ASC"
+        )
+
+        val clientes = mutableListOf<Cliente>()
+        while (cursor.moveToNext()) {
+            clientes.add(cursorToCliente(cursor))
+        }
+        cursor.close()
+
+        return clientes
+    }
+
+
+
+
+    private fun cursorToCliente(cursor: Cursor): Cliente {
+        return Cliente(
+            id_cliente = cursor.getIntOrNull(cursor.getColumnIndexOrThrow("id_cliente")),
+            nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
+            apellido = cursor.getString(cursor.getColumnIndexOrThrow("apellido")),
+            documento = cursor.getString(cursor.getColumnIndexOrThrow("documento")),
+            tipo_documento = cursor.getString(cursor.getColumnIndexOrThrow("tipo_documento")),
+            telefono = cursor.getStringOrNull(cursor.getColumnIndexOrThrow("telefono")),
+            email = cursor.getStringOrNull(cursor.getColumnIndexOrThrow("email")),
+            direccion = cursor.getStringOrNull(cursor.getColumnIndexOrThrow("direccion"))
+        )
+    }
+
+
+
 }

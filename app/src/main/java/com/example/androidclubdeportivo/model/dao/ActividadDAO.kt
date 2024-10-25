@@ -1,23 +1,94 @@
 package com.example.androidclubdeportivo.model.dao
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
-import com.example.androidclubdeportivo.model.Actividad
 import com.example.androidclubdeportivo.model.HorarioActividad
+import com.example.androidclubdeportivo.model.Profesor
 
 class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
 
-    fun insertarActividad(actividad: Actividad): Long {
+    fun insertarActividad(
+        nombre: String,
+        cupo: Int,
+        precio: Double,
+        idProfesor: Int,
+        idSede: Int
+    ): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
-            put("nombre", actividad.nombre)
-            put("cupo", actividad.cupo)
-            put("precio", actividad.precio)
-            put("id_profesor", actividad.idProfesor)
-            put("id_sede", actividad.idSede)
+            put("nombre", nombre)
+            put("cupo", cupo)
+            put("precio", precio)
+            put("id_profesor", idProfesor)
+            put("id_sede", idSede)
         }
-        return db.insert("Actividades", null, values)
+        val id = db.insert("Actividades", null, values)
+        Log.d("ActividadDAO", "Insertando actividad: $nombre, ID: $id")
+        return id
+    }
+
+    fun insertarHorario(
+        idActividad: Long,
+        diaSemana: String,
+        horaInicio: String,
+        horaFin: String
+    ): Long {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put("id_actividad", idActividad)
+            put("dia_semana", diaSemana)
+            put("hora_inicio", horaInicio)
+            put("hora_fin", horaFin)
+        }
+        val id = db.insert("HorariosActividad", null, values)
+        Log.d("ActividadDAO", "Insertando horario para ID de actividad: $idActividad, ID de horario: $id")
+        return id
+    }
+    fun getProfesorByActividad(idActividad: Int): Profesor? {
+        val db = dbHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT p.* FROM Profesores p INNER JOIN Actividades a ON p.id_profesor = a.id_profesor WHERE a.id_actividad = ?", arrayOf(idActividad.toString()))
+
+        return if (cursor.moveToFirst()) {
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow("id_profesor"))
+            val nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"))
+            val apellido = cursor.getString(cursor.getColumnIndexOrThrow("apellido"))
+            val documento = cursor.getString(cursor.getColumnIndexOrThrow("documento"))
+            val telefono = cursor.getString(cursor.getColumnIndexOrThrow("telefono"))
+            val email = cursor.getString(cursor.getColumnIndexOrThrow("email"))
+            Profesor(id, nombre, apellido, documento, telefono)
+        } else {
+            null
+        }.also {
+            cursor.close()
+        }
+    }
+    fun insertarProfesor(nombre: String, apellido: String, documento: String, telefono: String?, email: String?): Long {
+        val db = dbHelper.writableDatabase
+        val contentValues = ContentValues().apply {
+            put("nombre", nombre)
+            put("apellido", apellido)
+            put("documento", documento)
+            put("telefono", telefono)
+            put("email", email)
+        }
+        return db.insert("Profesores", null, contentValues)
+    }
+    fun getProfesores(): List<Profesor> {
+        val db = dbHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM Profesores", null)
+        val profesores = mutableListOf<Profesor>()
+
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow("id_profesor"))
+            val nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"))
+            val apellido = cursor.getString(cursor.getColumnIndexOrThrow("apellido"))
+            val documento = cursor.getString(cursor.getColumnIndexOrThrow("documento"))
+            val telefono = cursor.getString(cursor.getColumnIndexOrThrow("telefono"))
+
+            profesores.add(Profesor(id, nombre, apellido, documento, telefono))
+        }
+        cursor.close()
+        return profesores
     }
 
     fun insertarHorarioActividad(horario: HorarioActividad): Long {
@@ -32,32 +103,33 @@ class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
     }
 
     fun getActividadesConHorariosBySede(idSede: Int): List<Map<String, Any?>> {
-        val actividades = mutableListOf<Map<String, Any?>>()
         val db = dbHelper.readableDatabase
         val query = """
-        SELECT a.id_actividad, a.nombre, h.id_horario, h.dia_semana, h.hora_inicio, h.hora_fin 
-        FROM Actividades a 
+        SELECT a.id_actividad, a.nombre, h.dia_semana, h.hora_inicio, h.hora_fin
+        FROM Actividades a
         LEFT JOIN HorariosActividad h ON a.id_actividad = h.id_actividad
         WHERE a.id_sede = ?
-        ORDER BY a.nombre, h.dia_semana, h.hora_inicio
     """
         val cursor = db.rawQuery(query, arrayOf(idSede.toString()))
+        val actividadesConHorarios = mutableListOf<Map<String, Any?>>()
+
+        // Imprimir nombres de columnas para depuración
+        val columnCount = cursor.columnCount
+        for (i in 0 until columnCount) {
+            Log.d("CursorColumn", "Column $i: ${cursor.getColumnName(i)}")
+        }
 
         while (cursor.moveToNext()) {
-            val actividad: Map<String, Any?> = mapOf(
-                "id_actividad" to cursor.getInt(0),
-                "nombre" to cursor.getString(1),
-                "id_horario" to if (cursor.isNull(2)) null else cursor.getInt(2),
-                "dia_semana" to cursor.getString(3),
-                "hora_inicio" to cursor.getString(4),
-                "hora_fin" to cursor.getString(5)
-            )
-            actividades.add(actividad)
+            val actividad = mutableMapOf<String, Any?>()
+            for (i in 0 until columnCount) {
+                actividad[cursor.getColumnName(i)] = cursor.getString(i)
+            }
+            actividadesConHorarios.add(actividad)
         }
         cursor.close()
-        Log.d("ActividadDAO", "Actividades con horarios obtenidas: $actividades")
-        return actividades
+        return actividadesConHorarios
     }
+
 
     fun inscribirClienteEnActividad(
         clienteId: Int?,
@@ -120,5 +192,4 @@ class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
 
         Log.d("ActividadDAO", "Actividades y horarios de prueba insertados")
     }
-
 }

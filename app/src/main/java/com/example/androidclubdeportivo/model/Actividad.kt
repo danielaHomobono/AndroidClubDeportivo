@@ -16,6 +16,13 @@ data class HorarioActividad(
     val horaInicio: String,
     val horaFin: String
 )
+data class Profesor(
+    val id: Int? = null,
+    val nombre: String,
+    val apellido: String,
+    val documento: String,
+    val telefono: String?,
+)
 
 
 

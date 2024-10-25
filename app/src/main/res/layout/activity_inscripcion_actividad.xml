@@ -118,32 +118,32 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/TarjetaInscripcion"
                 android:layout_width="match_parent"
-                android:layout_height="188dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:padding="15dp"
                 app:cardBackgroundColor="#A3B4D3"
                 app:cardCornerRadius="20dp">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="188dp"
-                    android:animationCache="false"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <!-- Nombre del Cliente -->
                     <TextView
                         android:id="@+id/textView"
-                        android:layout_width="216dp"
-                        android:layout_height="38dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:text="Jane Doe"
-                        android:textColor="#FFFFFF"
-                        android:textSize="24sp" />
+                        android:text="Nombre del Cliente"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp" />
 
+                    <!-- Sede Seleccionada -->
                     <TextView
                         android:id="@+id/textView4"
                         android:layout_width="match_parent"
@@ -151,10 +151,11 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:text="Sede Cerro"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:text="Sede Seleccionada"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
 
+                    <!-- Clase Seleccionada -->
                     <TextView
                         android:id="@+id/textView5"
                         android:layout_width="match_parent"
@@ -162,10 +163,11 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:text="Clase individual de tenis"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:text="Clase Seleccionada"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
 
+                    <!-- Horario Seleccionado -->
                     <TextView
                         android:id="@+id/textView6"
                         android:layout_width="match_parent"
@@ -173,35 +175,35 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:text="Lunes y miércoles 10 am"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:text="Horario Seleccionado"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
 
+                    <!-- Profesor Asignado -->
                     <TextView
                         android:id="@+id/textView7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
+                        android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:text="Prof. Zagordo"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:text="Profesor Asignado"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
 
                 </LinearLayout>
 
+                <!-- Botón para compartir o realizar alguna acción -->
                 <ImageButton
                     android:id="@+id/imageButton2"
                     android:layout_width="79dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#A3B4D3"
-                    android:translationX="280dp"
-                    android:translationY="100dp"
-                    app:srcCompat="@drawable/share_icon"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:layout_gravity="end"
+                app:srcCompat="@drawable/share_icon"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             </androidx.cardview.widget.CardView>
-
-
             <Button
                 android:id="@+id/btnActivitySubscribe"
                 android:layout_width="match_parent"
