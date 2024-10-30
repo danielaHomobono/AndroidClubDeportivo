@@ -208,7 +208,8 @@ class ClubDatabaseHelper(context: Context) :
             val tipoUsuario = cursor.getString(cursor.getColumnIndex("tipo_usuario"))
             println("ID: $id, Email: $email, Password: $password, Tipo: $tipoUsuario")
         }
-        cursor.close()
+        
+           cursor.close()
     }
 
     fun insertUsuario(

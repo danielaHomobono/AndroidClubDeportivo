@@ -42,6 +42,7 @@ class InscripcionActividad : AppCompatActivity() {
         actividadDao = ActividadDAO(dbHelper)
         clienteDAO = ClienteDAO(dbHelper)
 
+
         initializeViews()
         setupHomeButton()
 
@@ -94,17 +95,31 @@ class InscripcionActividad : AppCompatActivity() {
         spinnerDocumentType.adapter = adapterDocumentType
 
         // Configuración del spinner de sedes
-        val sedes = dbHelper.getAllSedes()
-        val adapterSede = ArrayAdapter(this, android.R.layout.simple_spinner_item, sedes)
+        // Configuración del spinner de sedes
+        // Configuración del spinner de sedes
+        val sedes = actividadDao.getSedes() // Llama al método getSedes en actividadDAO
+        val nombresSedes =
+            sedes.map { it["nombre"].toString() } // Extrae solo los nombres para el spinner
+        val adapterSede = ArrayAdapter(this, android.R.layout.simple_spinner_item, nombresSedes)
         adapterSede.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSede.adapter = adapterSede
 
         spinnerSede.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val sedeSeleccionada = parent.getItemAtPosition(position).toString()
-                textViewSede.text = sedeSeleccionada // Actualiza el TextView con la sede seleccionada
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                // Obtener la sede seleccionada desde la lista `sedes` usando `position`
+                val sedeSeleccionada = sedes[position]
+                val sedeNombre = sedeSeleccionada["nombre"].toString()
+                val idSede = sedeSeleccionada["id_sede"] as Int
 
-                val idSede = position + 1
+                // Actualiza el TextView con el nombre de la sede seleccionada
+                textViewSede.text = sedeNombre
+
+                // Cargar las actividades con horarios usando `idSede`
                 val actividadesConHorarios = actividadDao.getActividadesConHorariosBySede(idSede)
                 setupActivitySpinner(actividadesConHorarios)
             }
@@ -113,32 +128,30 @@ class InscripcionActividad : AppCompatActivity() {
         }
     }
 
-    private fun setupActivitySpinner(actividadesConHorarios: List<Map<String, Any?>>) {
-        val actividadesUnicas = actividadesConHorarios.map { it["nombre"] as String }.distinct()
-        val adapterActivity =
-            ArrayAdapter(this, android.R.layout.simple_spinner_item, actividadesUnicas)
+        private fun setupActivitySpinner(actividadesConHorarios: List<Map<String, Any?>>) {
+        // Mapea nombres de actividades
+        val actividadesUnicas = actividadesConHorarios.mapNotNull { it["nombre"] as? String }.distinct()
+
+        val adapterActivity = ArrayAdapter(this, android.R.layout.simple_spinner_item, actividadesUnicas)
         adapterActivity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerActivity.adapter = adapterActivity
 
         spinnerActivity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val actividadSeleccionada = parent.getItemAtPosition(position).toString()
-                textViewClase.text = actividadSeleccionada // Actualiza el TextView con la actividad seleccionada
+                val actividadSeleccionada = parent.getItemAtPosition(position) as? String ?: return
+                textViewClase.text = actividadSeleccionada
 
-                // Obtener el ID de la actividad
-                val idActividad = obtenerIdActividad(actividadSeleccionada) ?: -1 // Usar -1 si no se encuentra
+                // Obtiene el ID de la actividad, asegurándote de que sea del tipo correcto
+                val idActividad = obtenerIdActividad(actividadSeleccionada) ?: -1
 
-                // Obtener el profesor solo si idActividad es válido
-                val profesor = if (idActividad != -1) {
-                    actividadDao.getProfesorByActividad(idActividad) // Solo llama si idActividad es válido
+                if (idActividad != -1) {
+                    val profesor = actividadDao.getProfesorByActividad(idActividad)
+                    textViewProfesor.text = profesor?.nombre ?: "Sin profesor asignado"
                 } else {
-                    null // Maneja el caso donde no se encuentra la actividad
+                    textViewProfesor.text = "Actividad no válida"
+                    Log.d("SpinnerActivity", "Actividades disponibles: $actividadesUnicas")
                 }
 
-                // Actualiza el TextView con el nombre del profesor o un mensaje predeterminado
-                textViewProfesor.text = profesor?.nombre ?: "Sin profesor asignado"
-
-                // Llama a setupHorarioSpinner aquí
                 setupHorarioSpinner(actividadesConHorarios, actividadSeleccionada)
             }
 
@@ -159,24 +172,21 @@ class InscripcionActividad : AppCompatActivity() {
             }
         }.distinct()
 
-        val adapterHorario = if (horarios.isEmpty()) {
-            ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf("Sin horarios disponibles"))
-        } else {
-            ArrayAdapter(this, android.R.layout.simple_spinner_item, horarios)
-        }
+        val adapterHorario = ArrayAdapter(this, android.R.layout.simple_spinner_item, horarios.ifEmpty { listOf("Sin horarios disponibles") })
         adapterHorario.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerHorario.adapter = adapterHorario
 
-        // Actualiza el TextView con el horario seleccionado
         spinnerHorario.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val horarioSeleccionado = parent.getItemAtPosition(position).toString()
-                textViewHorario.text = horarioSeleccionado // Actualiza el TextView con el horario seleccionado
+                val horarioSeleccionado = parent.getItemAtPosition(position) as? String ?: "Sin horarios disponibles"
+                textViewHorario.text = horarioSeleccionado
+                Log.d("SpinnerHorario", "Horarios disponibles para la actividad: $horarios")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
+
 
     private fun insertarDatosDePruebaUnaVez() {
         val prefs = getSharedPreferences("MiAppPrefs", Context.MODE_PRIVATE)

@@ -51,14 +51,29 @@
 
                 />
         </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/radioGroupFiltro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="2dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <RadioButton
+                android:id="@+id/radioButtonSede"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Por Sede" />
+
+            <RadioButton
+                android:id="@+id/radioButtonActividad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Por Actividad" />
+
+        </RadioGroup>
+
+
 
             <Spinner
                 android:id="@+id/spinnerSede"
@@ -83,340 +98,14 @@
                 android:spinnerMode="dropdown" />
 
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="370dp"
-                android:layout_height="370dp"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewHorarios"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+           /> <!-- Inicialmente oculto -->
 
-
-                <LinearLayout
-                    android:layout_width="350dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="0dp">
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Tenis Individual"
-                        android:textAlignment="center"
-                        android:textColor="#1E1E1E"
-                        android:textSize="22dp" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/textView10"
-                            android:layout_width="95dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Lunes"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView11"
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="8 a 11 am"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView12"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Zagordo"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
-                        <TextView
-                            android:id="@+id/textView13"
-                            android:layout_width="95dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Lunes"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView14"
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="13 a 15 pm"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView15"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Zagordo"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
-                        <TextView
-                            android:id="@+id/textView16"
-                            android:layout_width="95dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Martes"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView17"
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="8 a 11 am"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView18"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Hassen"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
-                        <TextView
-                            android:id="@+id/textView19"
-                            android:layout_width="95dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Martes"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView20"
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="14 a 18 pm"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView21"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Hassen"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
-                        <TextView
-                            android:id="@+id/textView22"
-                            android:layout_width="95dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Miércoles"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView23"
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="8 a 11 am"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView24"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Hassen"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
-                        <TextView
-                            android:id="@+id/textView25"
-                            android:layout_width="95dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Jueves"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView26"
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="8 a 11 am"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView27"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Zagordo"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
-                        <TextView
-                            android:id="@+id/textView28"
-                            android:layout_width="95dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Viernes"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView29"
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="8 a 11 am"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView30"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Zagordo"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
-                        <TextView
-                            android:id="@+id/textView31"
-                            android:layout_width="95dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Sábado"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView32"
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="8 a 11 am"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/textView33"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Prof. Zagordo"
-                            android:textColor="#757575"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-            <Button
-                android:id="@+id/btnMostrar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="#1B2B5B"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/montserrat_semibold"
-                android:padding="20dp"
-                android:text="MOSTRAR"
-                android:textSize="18dp"
-                app:cornerRadius="6dp"
-                />
-
+            <!-- Inicialmente oculto -->
         </LinearLayout>
-
-
-    </LinearLayout>
-
 
 </ScrollView>

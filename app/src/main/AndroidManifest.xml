@@ -13,9 +13,11 @@
         android:theme="@style/Theme.AndroidClubDeportivo"
         tools:targetApi="31">
         <activity
-            android:name=".controller.Pagar"
+            android:name=".controller.ImpresCarnetCliente"
             android:exported="false" />
-        <!-- Otras actividades -->
+        <activity
+            android:name=".controller.Pagar"
+            android:exported="false" /> <!-- Otras actividades -->
         <activity
             android:name=".controller.ModificacionCliente"
             android:exported="false" />

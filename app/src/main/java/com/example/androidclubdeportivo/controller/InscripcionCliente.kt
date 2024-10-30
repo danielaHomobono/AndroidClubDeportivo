@@ -91,6 +91,13 @@ class InscripcionCliente : AppCompatActivity() {
 
         btnSubscribe.setOnClickListener {
             if (validateForm()) {
+                if (!cbPresentoFichaMedica.isChecked) {
+                    Toast.makeText(
+                        this,
+                        "Debe presentar la ficha médica en los próximos días",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
                 val cliente = Cliente(
                     nombre = etFirstName.text.toString().trim(),
                     apellido = etLastName.text.toString().trim(),
@@ -98,7 +105,9 @@ class InscripcionCliente : AppCompatActivity() {
                     tipo_documento = spinnerDocumentType.selectedItem.toString(),
                     telefono = etPhoneNumber.text.toString().trim(),
                     email = etEmail.text.toString().trim(),
-                    direccion = null
+                    direccion = null,
+                    fechaUltimoPago = "01/01/2024" // Asigna un valor adecuado
+
                 )
 
                 try {
@@ -109,7 +118,7 @@ class InscripcionCliente : AppCompatActivity() {
                     if (idCliente != -1L) {
                         if (cbInscribirSocio.isChecked) {
                             Log.d("InscripcionCliente", "Intentando inscribir socio")
-                            val idSocio = clienteDAO.inscribirSocio(idCliente, 1000.0)
+                            val idSocio = clienteDAO.inscribirSocio(idCliente, 20000.0, "2024-12-31", "Al día") // Asegúrate de pasar el estado y la fecha de vencimiento
                             Log.d("InscripcionCliente", "ID del socio inscrito: $idSocio")
                             if (idSocio == -1L) {
                                 throw Exception("Error al registrar socio")
@@ -136,8 +145,6 @@ class InscripcionCliente : AppCompatActivity() {
             }
         }
     }
-
-
 
     private fun setupHomeButton() {
         btnHome.setOnClickListener {

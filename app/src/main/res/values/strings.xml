@@ -52,5 +52,16 @@
         <item>Baja</item>
         <item>Suspendido</item>
     </string-array>
+    <string-array name="forma_pago_array">
+        <item>Efectivo</item>
+        <item>QR</item>
+        <item>Tarjeta de Crédito</item>
+        <item>Transferencia</item>
+    </string-array>
+    <string-array name="tipo_cuota_array">
+        <item>Mensual</item>
+        <item>Diaria</item>
+    </string-array>
+
 
 </resources>

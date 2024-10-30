@@ -37,22 +37,22 @@ class Login : AppCompatActivity() {
 
         authService = AutenService(this)
 
-
-        // Insertar usuario de prueba solo si no existe
-        if (!authService.isUserRegistered("dani")) {
-            val isRegistered = authService.registerUser("dani", "1234", "Admin")
-            if (isRegistered) {
-                Log.d(TAG, "Usuario de prueba registrado con éxito.")
-                Toast.makeText(this, "Usuario de prueba registrado con éxito", Toast.LENGTH_SHORT).show()
+        val admins = listOf("dani", "vero", "roma", "emi")
+        for (admin in admins) {
+            if (!authService.isUserRegistered(admin)) {
+                val isRegistered = authService.registerUser(admin, "1234", "Admin")
+                if (isRegistered) {
+                    Log.d(TAG, "Usuario de prueba $admin registrado con éxito.")
+                    Toast.makeText(this, "Usuario de prueba $admin registrado con éxito", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(TAG, "Error al registrar usuario de prueba $admin")
+                    Toast.makeText(this, "Error al registrar usuario de prueba $admin", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Log.e(TAG, "Error al registrar usuario de prueba")
-                Toast.makeText(this, "Error al registrar usuario de prueba", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "El usuario de prueba $admin ya existe")
             }
-        } else {
-            Log.d(TAG, "El usuario de prueba ya existe")
         }
 
-        // Imprimir el contenido de la tabla Usuarios
         val dbHelper = ClubDatabaseHelper(this)
         dbHelper.printUsersTable()
 
@@ -70,26 +70,40 @@ class Login : AppCompatActivity() {
             if (validateInput()) {
                 val username = etUser.text.toString().trim()
                 val password = etPassword.text.toString().trim()
-                Log.d(TAG, "Intentando iniciar sesión con: $username, password: $password")
+                Log.d(TAG, "Intentando iniciar sesión con: $username")
 
-                if (authService.isUserRegistered(username)) {
-                    Log.d(TAG, "El usuario $username está registrado")
-                    if (authService.login(username, password)) {
-                        Log.d(TAG, "Inicio de sesión exitoso para: $username")
-                        Toast.makeText(this, "¡Inicio de sesión exitoso!", Toast.LENGTH_SHORT).show()
-                        if (cbRememberMe.isChecked) {
-                            authService.rememberUser(username)
-                        }
-                        val intent = Intent(this, Home::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Log.d(TAG, "Contraseña incorrecta para: $username")
-                        Toast.makeText(this, "Contraseña incorrecta.", Toast.LENGTH_SHORT).show()
+                val (userType, clienteId) = authService.login(username, password)
+                if (userType != null) {
+                    Log.d(TAG, "Inicio de sesión exitoso para $username como $userType")
+                    Toast.makeText(this, "¡Inicio de sesión exitoso!", Toast.LENGTH_SHORT).show()
+
+                    if (cbRememberMe.isChecked) {
+                        authService.rememberUser(username)
                     }
+
+                    when (userType) {
+                        "Admin" -> {
+                            val intent = Intent(this, Home::class.java)
+                            startActivity(intent)
+                        }
+                        "Socio" -> {
+                            if (clienteId != null) {
+                                val intent = Intent(this, ImpresCarnetCliente::class.java)
+                                intent.putExtra("CLIENTE_ID", clienteId)
+                                startActivity(intent)
+                            } else {
+                                Log.e(TAG, "ID de cliente no encontrado para el socio: $username")
+                                Toast.makeText(this, "Error: ID de socio no encontrado", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        else -> {
+                            Log.e(TAG, "Tipo de usuario no permitido: $userType")
+                            Toast.makeText(this, "No tienes permiso para acceder", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    finish()
                 } else {
-                    Log.d(TAG, "El usuario $username no está registrado")
-                    Toast.makeText(this, "Usuario no registrado.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Credenciales incorrectas o usuario no autorizado.", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
@@ -111,7 +125,6 @@ class Login : AppCompatActivity() {
             etPassword.setSelection(etPassword.text.length)
         }
 
-        // Cargar usuario recordado si existe
         val rememberedUser = authService.getRememberedUser()
         if (rememberedUser != null) {
             etUser.setText(rememberedUser)

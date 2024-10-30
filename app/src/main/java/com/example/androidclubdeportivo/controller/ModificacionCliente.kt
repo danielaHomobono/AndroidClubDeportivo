@@ -91,19 +91,30 @@ class ModificacionCliente : AppCompatActivity() {
             return
         }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, clientes.map { "${it.nombre} ${it.apellido} - ${it.documento}" })
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            clientes.map { "${it.nombre} ${it.apellido} - ${it.documento}" }
+        )
         autoCompleteClientes.setAdapter(adapter)
 
-        autoCompleteClientes.setOnItemClickListener { _, _, position, _ ->
-            val selectedCliente = clientes[position]
-            clienteId = selectedCliente.id_cliente ?: -1
-            if (clienteId != -1) {
-                loadClienteData(selectedCliente)
-            } else {
-                Toast.makeText(this, "Error al cargar el cliente seleccionado", Toast.LENGTH_SHORT).show()
+        autoCompleteClientes.setOnItemClickListener { _, _, _, _ ->
+            val selectedText = autoCompleteClientes.text.toString()
+            val selectedCliente = clientes.find {
+                "${it.nombre} ${it.apellido} - ${it.documento}" == selectedText
+            }
+            if (selectedCliente != null) {
+                clienteId = selectedCliente.id_cliente ?: -1
+                if (clienteId != -1) {
+                    loadClienteData(selectedCliente)
+                } else {
+                    Toast.makeText(this, "Error al cargar el cliente seleccionado", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
+
+
     private fun loadClienteData(cliente: Cliente) {
         etFirstName.setText(cliente.nombre)
         etLastName.setText(cliente.apellido)
@@ -113,10 +124,7 @@ class ModificacionCliente : AppCompatActivity() {
         spinnerDocumentType.setSelection(tipoDocumentoPosition)
         etPhoneNumber.setText(cliente.telefono)
         etEmail.setText(cliente.email)
-        // Aquí cargarías los datos de usuario y contraseña si los tienes almacenados
-        // También puedes manejar los CheckBox si tienes esa información
     }
-
 
 
 
@@ -146,18 +154,35 @@ class ModificacionCliente : AppCompatActivity() {
                     tipo_documento = spinnerDocumentType.selectedItem.toString(),
                     telefono = etPhoneNumber.text.toString().trim(),
                     email = etEmail.text.toString().trim(),
-                    direccion = null  // Asumiendo que no tienes un campo para dirección en este formulario
+                    direccion = null ,
+                    fechaUltimoPago = "01/01/2024"// Asigna un valor adecuado
+
                 )
 
                 if (clienteDAO.actualizarCliente(clienteActualizado)) {
                     // Aquí deberías manejar la actualización de usuario y contraseña si es necesario
                     Toast.makeText(this, "Cliente actualizado con éxito", Toast.LENGTH_SHORT).show()
+                    clearFields() // Limpiar campos después de la modificación
                     finish()
+
                 } else {
                     Toast.makeText(this, "Error al actualizar el cliente", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+    private fun clearFields() {
+        etFirstName.text.clear()
+        etLastName.text.clear()
+        etDocumentNumber.text.clear()
+        etEmail.text.clear()
+        etPhoneNumber.text.clear()
+        etUser.text.clear()
+        etPassword.text.clear()
+        cbInscribirSocio.isChecked = false
+        cbPresentoFichaMedica.isChecked = false
+        spinnerDocumentType.setSelection(0)
+        autoCompleteClientes.text.clear()
     }
     private fun setupHomeButton() {
         btnHome.setOnClickListener {

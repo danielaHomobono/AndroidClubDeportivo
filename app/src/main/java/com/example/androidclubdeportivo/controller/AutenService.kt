@@ -18,28 +18,61 @@ class AutenService(context: Context) {
         private const val TAG = "AutenService"
     }
 
-    fun login(email: String, password: String): Boolean {
+    fun login(email: String, password: String): Pair<String?, Int?> {
         val hashedPassword = hashPassword(password)
         var db: SQLiteDatabase? = null
         var cursor: Cursor? = null
 
         try {
             db = dbHelper.readableDatabase
-            val query = "SELECT * FROM Usuarios WHERE email = ?"
+            val query = """
+                SELECT u.tipo_usuario, u.password, c.id_cliente, s.id_socio
+                FROM Usuarios u
+                LEFT JOIN Clientes c ON u.id_cliente = c.id_cliente
+                LEFT JOIN Socios s ON c.id_cliente = s.id_cliente
+                WHERE u.email = ?
+            """
             cursor = db.rawQuery(query, arrayOf(email))
 
             if (cursor.moveToFirst()) {
-                val storedPassword = cursor.getString(cursor.getColumnIndex("password"))
-                val result = hashedPassword == storedPassword
-                Log.d(TAG, "Login attempt for $email: ${if (result) "successful" else "failed"}")
-                Log.d(TAG, "Stored password: $storedPassword")
-                Log.d(TAG, "Hashed input password: $hashedPassword")
-                return result
+                val passwordIndex = cursor.getColumnIndex("password")
+                val userTypeIndex = cursor.getColumnIndex("tipo_usuario")
+                val clienteIdIndex = cursor.getColumnIndex("id_cliente")
+                val socioIdIndex = cursor.getColumnIndex("id_socio")
+
+                if (passwordIndex >= 0 && userTypeIndex >= 0) {
+                    val storedPassword = cursor.getString(passwordIndex)
+                    val userType = cursor.getString(userTypeIndex)
+                    val clienteId = if (clienteIdIndex >= 0) cursor.getInt(clienteIdIndex) else null
+                    val socioId = if (socioIdIndex >= 0 && !cursor.isNull(socioIdIndex)) cursor.getInt(socioIdIndex) else null
+
+                    if (hashedPassword == storedPassword) {
+                        when {
+                            userType == "Admin" -> {
+                                Log.d(TAG, "Inicio de sesión exitoso para admin: $email")
+                                return Pair("Admin", null)
+                            }
+                            userType == "Cliente" && socioId != null -> {
+                                Log.d(TAG, "Inicio de sesión exitoso para socio: $email")
+                                return Pair("Socio", clienteId)
+                            }
+                            else -> {
+                                Log.d(TAG, "Usuario no tiene permisos para iniciar sesión: $email")
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "Contraseña incorrecta para $email")
+                    }
+                } else {
+                    Log.e(TAG, "Error: No se encontraron las columnas necesarias en la tabla Usuarios.")
+                }
+            } else {
+                Log.d(TAG, "Usuario no encontrado: $email")
             }
-            return false
+            return Pair(null, null)
         } catch (e: Exception) {
             Log.e(TAG, "Error durante el inicio de sesión: ${e.message}")
-            return false
+            return Pair(null, null)
         } finally {
             cursor?.close()
             db?.close()

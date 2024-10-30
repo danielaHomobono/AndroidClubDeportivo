@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +21,6 @@
             android:paddingTop="20dp"
             android:layout_marginBottom="20dp">
 
-            <!-- Texto del Header -->
             <TextView
                 android:id="@+id/headerTitle"
                 android:layout_width="0dp"
@@ -35,7 +33,6 @@
                 android:textStyle="bold"
                 android:fontFamily="@font/montserrat_semibold"/>
 
-
             <ImageButton
                 android:id="@+id/homeButton"
                 android:layout_width="48dp"
@@ -44,257 +41,15 @@
                 android:scaleType="fitCenter"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Ir a inicio"
-                android:src="@drawable/home_icon"
-                />
+                android:src="@drawable/home_icon"/>
         </LinearLayout>
 
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="370dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-
-                <ImageButton
-                    android:id="@+id/whatsapp"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:padding="0dp"
-                    android:contentDescription="Ir a whatsapp"
-                    app:srcCompat="@drawable/whatsappicon" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="30dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="0dp">
-
-                    <TextView
-                        android:id="@+id/nombre"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Homobono, Daniela"
-                        android:textColor="#1E1E1E"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/natacion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Natacion"
-                        android:textColor="#757575"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/nutricion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Nutricion"
-                        android:textColor="#757575" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="370dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-
-                <ImageButton
-                    android:id="@+id/whatsapp2"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:padding="0dp"
-                    android:contentDescription="Ir a whatsapp"
-                    app:srcCompat="@drawable/whatsappicon" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="30dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="0dp">
-
-                    <TextView
-                        android:id="@+id/zagordoRoma"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Zagordo, Roma"
-                        android:textColor="#1E1E1E"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/natacion2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Natacion"
-                        android:textColor="#757575"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tenis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Tenis"
-                        android:textColor="#757575" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="370dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-
-                <ImageButton
-                    android:id="@+id/whatsapp3"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:padding="0dp"
-                    android:contentDescription="Ir a whatsapp"
-                    app:srcCompat="@drawable/whatsappicon" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="30dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="0dp">
-
-                    <TextView
-                        android:id="@+id/toranzoEmira"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Toranzo, Emira"
-                        android:textColor="#1E1E1E"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/matronatacion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Matronatacion"
-                        android:textColor="#757575"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="370dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-
-                <ImageButton
-                    android:id="@+id/whatsapp4"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:padding="0dp"
-                    android:contentDescription="Ir a whatsapp"
-                    app:srcCompat="@drawable/whatsappicon" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="30dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="0dp">
-
-                    <TextView
-                        android:id="@+id/hassenVeronica"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Hassen, Veronica"
-                        android:textColor="#1E1E1E"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/natacion3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Natacion"
-                        android:textColor="#757575"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tenis2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:text="Tenis"
-                        android:textColor="#757575" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        <!-- LinearLayout para mostrar la lista de profesores -->
+        <LinearLayout
+            android:id="@+id/linearLayoutProfesores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"/>
     </LinearLayout>
 </ScrollView>

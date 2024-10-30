@@ -1,91 +1,81 @@
 package com.example.androidclubdeportivo.controller
 
 
+import ClienteAdapter
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.androidclubdeportivo.R
+import com.example.androidclubdeportivo.controller.Home
+import com.example.androidclubdeportivo.model.Cliente
+import com.example.androidclubdeportivo.model.dao.ClienteDAO
+import com.example.androidclubdeportivo.model.dao.ClubDatabaseHelper
 
 class Reportes : AppCompatActivity() {
 
-    // Declarar variables para los elementos de la interfaz
-    private lateinit var headerTitle: TextView
-    private lateinit var homeButton: ImageButton
-    private lateinit var spinnerActividad: Spinner
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ClienteAdapter
     private lateinit var spinnerEstado: Spinner
     private lateinit var btnMostrar: Button
+    private lateinit var clienteDAO: ClienteDAO
     private lateinit var btnHome: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reportes)  // Reemplazar con el nombre correcto de tu layout
+        setContentView(R.layout.activity_reportes)
 
-
-        headerTitle = findViewById(R.id.headerTitle)
-        homeButton = findViewById(R.id.homeButton)
-        spinnerActividad = findViewById(R.id.spinnerActividad)
+        // Inicializa los elementos de la interfaz
+        btnHome = findViewById(R.id.homeButton)
+        recyclerView = findViewById(R.id.recyclerViewClientes)
         spinnerEstado = findViewById(R.id.spinnerEstado)
         btnMostrar = findViewById(R.id.btnMostrar)
-        btnHome = findViewById(R.id.homeButton)
 
-        setupSpinnerActividad()
-        setupSpinnerEstado()
+        // Inicializa el DAO
+        clienteDAO = ClienteDAO(ClubDatabaseHelper(this))
         setupHomeButton()
+
+        // Configura el RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Inicializa el Spinner
+        val estados = arrayOf("Vencido", "Al Día") // Define los elementos del Spinner
+        val adapterSpinner =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, estados) // Crea el adaptador
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // Configura el estilo del dropdown
+        spinnerEstado.adapter = adapterSpinner // Asigna el adaptador al Spinner
+
+        // Configura el botón para mostrar los clientes
         btnMostrar.setOnClickListener {
-            mostrarResultados()
+            try {
+                val estadoSeleccionado = spinnerEstado.selectedItem.toString()
+                val clientes: List<Cliente> = if (estadoSeleccionado == "Vencido") {
+                    clienteDAO.getClientesConCuotasVencidas()
+                } else {
+                    clienteDAO.getClientesAlDia()
+                }
+
+                Log.d(
+                    "ReportesActivity",
+                    "Clientes obtenidos: ${clientes.size}"
+                ) // Log para verificar la cantidad de clientes
+
+                // Actualiza el adaptador
+                adapter = ClienteAdapter(clientes)
+                recyclerView.adapter = adapter
+                recyclerView.visibility = View.VISIBLE // Muestra el RecyclerView
+            } catch (e: Exception) {
+                Log.e("ReportesActivity", "Error al mostrar clientes: ${e.message}")
+            }
         }
-
-
     }
-
-
-    private fun setupSpinnerActividad() {
-        val actividades = listOf("Pago de Cuotas", "Deudas de Profesores", "Otro")
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            actividades
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerActividad.adapter = adapter
-    }
-
-
-    private fun setupSpinnerEstado() {
-        val estados = listOf("Vencido", "Al día")
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            estados
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerEstado.adapter = adapter
-    }
-
-    // Función que muestra los resultados según las selecciones
-    private fun mostrarResultados() {
-        val actividadSeleccionada = spinnerActividad.selectedItem.toString()
-        val estadoSeleccionado = spinnerEstado.selectedItem.toString()
-
-
-        if (actividadSeleccionada == "Pago de Cuotas" && estadoSeleccionado == "Vencido") {
-
-        } else if (actividadSeleccionada == "Deudas de Profesores" && estadoSeleccionado == "Al día") {
-
-        }
-
-        val intent = Intent(this, Reportes2::class.java)
-        intent.putExtra("actividadSeleccionada", actividadSeleccionada)
-        intent.putExtra("estadoSeleccionado", estadoSeleccionado)
-        startActivity(intent)
-    }
-
-
     private fun setupHomeButton() {
         btnHome.setOnClickListener {
             val intent = Intent(this, Home::class.java)

@@ -1,0 +1,70 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewSede"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#1B2B5B"
+                android:fontFamily="@font/montserrat_semibold"/>
+
+            <TextView
+                android:id="@+id/textViewActividad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:fontFamily="@font/montserrat_semibold"/>
+
+            <TextView
+                android:id="@+id/textViewHorario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/montserrat_semibold"/>
+
+            <TextView
+                android:id="@+id/textViewTelefonoProfesor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:fontFamily="@font/montserrat_semibold"/>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageViewProfesor"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/today"
+            android:contentDescription="Imagen del profesor"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
