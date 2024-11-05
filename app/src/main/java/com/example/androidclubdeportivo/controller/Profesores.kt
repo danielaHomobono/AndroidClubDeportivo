@@ -54,19 +54,18 @@ class Profesores : AppCompatActivity() {
     }
 
     private fun setupSpinners() {
-        // Setup apellido spinner
+
         val apellidos = listOf("Todos") + allProfesores.map { it.apellido }.distinct().sorted()
         val apellidoAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, apellidos)
         apellidoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerApellido.adapter = apellidoAdapter
 
-        // Setup actividad spinner
+
         val actividades = listOf("Todas") + allActividades.map { it["nombre"] as String }.distinct().sorted()
         val actividadAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, actividades)
         actividadAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerActividad.adapter = actividadAdapter
 
-        // Set listeners for spinners
         spinnerApellido.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 if (radioGroupFiltro.checkedRadioButtonId == R.id.radioButtonNombre) {
@@ -101,7 +100,7 @@ class Profesores : AppCompatActivity() {
             filterProfesores()
         }
 
-        // Set initial state
+
         radioGroupFiltro.check(R.id.radioButtonNombre)
         spinnerApellido.isEnabled = true
         spinnerActividad.isEnabled = false

@@ -28,9 +28,9 @@ class GestionPagos : AppCompatActivity() {
         sucursalCerro = findViewById(R.id.sucursal_cerro)
         sucursalCordoba = findViewById(R.id.sucursal_cordoba)
 
-        // Set up click listeners
+
         homeButton.setOnClickListener {
-            // Navigate to home screen
+
             val intent = Intent(this, Home::class.java) // Replace MainActivity with your actual home activity
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
@@ -48,7 +48,7 @@ class GestionPagos : AppCompatActivity() {
              startActivity(intent)
         }
 
-        // You can add more functionality here, such as updating the sucursal information
+
         updateSucursalInfo()
     }
 

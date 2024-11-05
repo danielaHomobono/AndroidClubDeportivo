@@ -155,14 +155,14 @@ class ModificacionCliente : AppCompatActivity() {
                     telefono = etPhoneNumber.text.toString().trim(),
                     email = etEmail.text.toString().trim(),
                     direccion = null ,
-                    fechaUltimoPago = "01/01/2024"// Asigna un valor adecuado
+                    fechaUltimoPago = "01/01/2024"
 
                 )
 
                 if (clienteDAO.actualizarCliente(clienteActualizado)) {
-                    // Aquí deberías manejar la actualización de usuario y contraseña si es necesario
+
                     Toast.makeText(this, "Cliente actualizado con éxito", Toast.LENGTH_SHORT).show()
-                    clearFields() // Limpiar campos después de la modificación
+                    clearFields()
                     finish()
 
                 } else {
@@ -224,7 +224,6 @@ class ModificacionCliente : AppCompatActivity() {
             isValid = false
         }
 
-        // Aquí puedes agregar validaciones para usuario y contraseña si es necesario
 
         return isValid
     }

@@ -44,7 +44,7 @@
                 android:src="@drawable/home_icon"/>
         </LinearLayout>
 
-        <!-- LinearLayout para mostrar la lista de profesores -->
+
         <LinearLayout
             android:id="@+id/linearLayoutProfesores"
             android:layout_width="match_parent"

@@ -161,7 +161,13 @@ class ClubDatabaseHelper(context: Context) :
         """
         )
 
-        Log.d("ClubDatabaseHelper", "Base de datos creada exitosamente")
+        // Insert initial data
+        insertInitialSedes(db)
+        insertInitialProfesores(db)
+        insertInitialActividades(db)
+        insertInitialHorarios(db)
+
+        Log.d("ClubDatabaseHelper", "Base de datos creada exitosamente con datos iniciales")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -185,7 +191,106 @@ class ClubDatabaseHelper(context: Context) :
         }
     }
 
-    // Métodos auxiliares
+    private fun insertInitialSedes(db: SQLiteDatabase) {
+        val sedes = listOf(
+            Pair(3, "Sucursal Cerro"),
+            Pair(4, "Sucursal Córdoba")
+        )
+
+        for ((id, nombre) in sedes) {
+            val values = ContentValues().apply {
+                put("id_sede", id)
+                put("nombre", nombre)
+                put("direccion", "Dirección de $nombre")
+            }
+            db.insert("Sedes", null, values)
+        }
+    }
+
+    private fun insertInitialProfesores(db: SQLiteDatabase) {
+        val profesores = listOf(
+            Triple(1, "Juan", "Donadio"),
+            Triple(2, "María", "Nieves"),
+            Triple(3, "Carlos", "Gardel")
+        )
+
+        for ((id, nombre, apellido) in profesores) {
+            val values = ContentValues().apply {
+                put("id_profesor", id)
+                put("nombre", nombre)
+                put("apellido", apellido)
+                put("documento", "${id}2345678")
+                put("telefono", "${id}23456789")
+                put("email", "${nombre.toLowerCase()}@example.com")
+            }
+            db.insert("Profesores", null, values)
+        }
+    }
+
+    private fun insertInitialActividades(db: SQLiteDatabase) {
+        val actividades = listOf(
+            arrayOf(1, "Tenis", 1, 3),
+            arrayOf(2, "Yoga", 3, 4),
+            arrayOf(3, "Pilates", 1, 4),
+            arrayOf(4, "Spinning", 1, 3),
+            arrayOf(5, "Zumba", 1, 3),
+            arrayOf(6, "Boxeo", 1, 3),
+            arrayOf(7, "Basquet", 1, 3),
+            arrayOf(8, "Yoga", 1, 4),
+            arrayOf(9, "Yoga", 1, 4),
+            arrayOf(10, "Natación", 2, 4)
+        )
+
+        for ((id, nombre, idProfesor, idSede) in actividades) {
+            val values = ContentValues().apply {
+                put("id_actividad", id as Int)
+                put("nombre", nombre as String)
+                put("cupo", 20)
+                put("precio", 1000.0)
+                put("id_profesor", idProfesor as Int)
+                put("id_sede", idSede as Int)
+            }
+            db.insert("Actividades", null, values)
+        }
+    }
+
+    private fun insertInitialHorarios(db: SQLiteDatabase) {
+        val horarios = listOf(
+            arrayOf(1, 1, "Lunes", "10:00", "11:00"),
+            arrayOf(2, 1, "Miércoles", "10:00", "11:00"),
+            arrayOf(3, 2, "Lunes", "10:00", "11:00"),
+            arrayOf(4, 2, "Miércoles", "10:00", "11:00"),
+            arrayOf(5, 3, "Lunes", "10:00", "11:00"),
+            arrayOf(6, 3, "Miércoles", "10:00", "11:00"),
+            arrayOf(7, 4, "Lunes", "10:00", "11:00"),
+            arrayOf(8, 4, "Miércoles", "10:00", "11:00"),
+            arrayOf(9, 5, "Lunes", "10:00", "11:00"),
+            arrayOf(10, 5, "Miércoles", "10:00", "11:00"),
+            arrayOf(11, 6, "Lunes", "10:00", "11:00"),
+            arrayOf(12, 6, "Miércoles", "10:00", "11:00"),
+            arrayOf(13, 7, "Lunes", "10:00", "11:00"),
+            arrayOf(14, 7, "Miércoles", "10:00", "11:00"),
+            arrayOf(15, 1, "Lunes", "10:00", "11:00"),
+            arrayOf(16, 1, "Miércoles", "10:00", "11:00"),
+            arrayOf(17, 2, "Martes", "10:00", "11:00"),
+            arrayOf(18, 3, "Jueves", "10:00", "11:00"),
+            arrayOf(19, 4, "Lunes", "11:00", "12:00"),
+            arrayOf(20, 5, "Miércoles", "11:00", "12:00"),
+            arrayOf(21, 6, "Viernes", "11:00", "12:00"),
+            arrayOf(22, 10, "Martes", "09:00", "10:00")
+        )
+
+        for ((id, idActividad, diaSemana, horaInicio, horaFin) in horarios) {
+            val values = ContentValues().apply {
+                put("id_horario", id as Int)
+                put("id_actividad", idActividad as Int)
+                put("dia_semana", diaSemana as String)
+                put("hora_inicio", horaInicio as String)
+                put("hora_fin", horaFin as String)
+            }
+            db.insert("HorariosActividad", null, values)
+        }
+    }
 
     fun insertTestUser(email: String, password: String, tipoUsuario: String): Long {
         val db = this.writableDatabase
@@ -201,15 +306,26 @@ class ClubDatabaseHelper(context: Context) :
         val db = readableDatabase
         val cursor = db.rawQuery("SELECT * FROM Usuarios", null)
         println("Contenido de la tabla Usuarios:")
+
         while (cursor.moveToNext()) {
-            val id = cursor.getLong(cursor.getColumnIndex("id_usuario"))
-            val email = cursor.getString(cursor.getColumnIndex("email"))
-            val password = cursor.getString(cursor.getColumnIndex("password"))
-            val tipoUsuario = cursor.getString(cursor.getColumnIndex("tipo_usuario"))
-            println("ID: $id, Email: $email, Password: $password, Tipo: $tipoUsuario")
+            // Obtenemos los índices de las columnas
+            val idIndex = cursor.getColumnIndex("id_usuario")
+            val emailIndex = cursor.getColumnIndex("email")
+            val passwordIndex = cursor.getColumnIndex("password")
+            val tipoUsuarioIndex = cursor.getColumnIndex("tipo_usuario")
+
+            // Verificación de que los índices son válidos (diferentes de -1)
+            if (idIndex != -1 && emailIndex != -1 && passwordIndex != -1 && tipoUsuarioIndex != -1) {
+                val id = cursor.getLong(idIndex)
+                val email = cursor.getString(emailIndex)
+                val password = cursor.getString(passwordIndex)
+                val tipoUsuario = cursor.getString(tipoUsuarioIndex)
+                println("ID: $id, Email: $email, Password: $password, Tipo: $tipoUsuario")
+            } else {
+                println("Error: una o más columnas no se encontraron en la tabla Usuarios.")
+            }
         }
-        
-           cursor.close()
+        cursor.close()
     }
 
     fun insertUsuario(
@@ -228,29 +344,23 @@ class ClubDatabaseHelper(context: Context) :
         return db.insert("Usuarios", null, values)
     }
 
-    fun isEmailRegistered(email: String): Boolean {
-        val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM Usuarios WHERE email = ?", arrayOf(email))
-        val exists = cursor.count > 0
-        cursor.close()
-        return exists
-    }
-
     private fun hashPassword(password: String): String {
         val md = MessageDigest.getInstance("SHA-256")
         val digest = md.digest(password.toByteArray())
         return digest.fold("", { str, it -> str + "%02x".format(it) })
     }
+
     fun limpiarTablaSedes() {
         val db = this.writableDatabase
         db.delete("Sedes", null, null)
         Log.d("ClubDatabaseHelper", "Tabla Sedes limpiada")
     }
+
     fun insertTestSedes() {
         val db = this.writableDatabase
         val sedes = listOf("Sucursal Cerro", "Sucursal Córdoba")
 
-        // Primero, limpia la tabla
+
         limpiarTablaSedes()
 
         for (sede in sedes) {
@@ -262,62 +372,4 @@ class ClubDatabaseHelper(context: Context) :
             Log.d("ClubDatabaseHelper", "Sede insertada: $sede")
         }
     }
-
-    fun getAllSedes(): List<String> {
-        val sedesDeseadas = listOf("Sucursal Cerro", "Sucursal Córdoba")
-        val sedes = mutableListOf<String>()
-        val db = this.readableDatabase
-        val cursor = db.query(
-            "Sedes",
-            arrayOf("nombre"),
-            "nombre IN (?, ?)",
-            sedesDeseadas.toTypedArray(),
-            null,
-            null,
-            "nombre ASC"
-        )
-
-        while (cursor.moveToNext()) {
-            sedes.add(cursor.getString(0))
-        }
-        cursor.close()
-        Log.d("ClubDatabaseHelper", "Sedes obtenidas: $sedes")
-        return sedes
-    }
-
-    fun insertTestActividades() {
-        val db = this.writableDatabase
-        val actividades = listOf(
-            Triple("Yoga", 1, 1),
-            Triple("Pilates", 2, 2),
-            Triple("Spinning", 3, 3)
-        )
-        for ((nombre, idProfesor, idSede) in actividades) {
-            val values = ContentValues().apply {
-                put("nombre", nombre)
-                put("cupo", 20)
-                put("precio", 1000.0)
-                put("id_profesor", idProfesor)
-                put("id_sede", idSede)
-            }
-            db.insert("Actividades", null, values)
-        }
-        Log.d("ClubDatabaseHelper", "Actividades de prueba insertadas")
-    }
-    fun printAllTables() {
-        val tables = listOf("Sedes", "Actividades", "HorariosActividad", "Clientes", "Inscripciones")
-        val db = readableDatabase
-        for (table in tables) {
-            val cursor = db.rawQuery("SELECT * FROM $table", null)
-            Log.d("ClubDatabaseHelper", "Contenido de la tabla $table:")
-            while (cursor.moveToNext()) {
-                val rowData = (0 until cursor.columnCount).map {
-                    "${cursor.getColumnName(it)}: ${cursor.getString(it)}"
-                }.joinToString(", ")
-                Log.d("ClubDatabaseHelper", rowData)
-            }
-            cursor.close()
-        }
-    }
-
 }

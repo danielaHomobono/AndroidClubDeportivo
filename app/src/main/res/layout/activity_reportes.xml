@@ -20,7 +20,7 @@
             android:paddingTop="20dp"
             android:layout_marginBottom="20dp">
 
-            <!-- Texto del Header -->
+
             <TextView
                 android:id="@+id/headerTitle"
                 android:layout_width="0dp"
@@ -95,14 +95,14 @@
                 app:cornerRadius="6dp"/>
         </LinearLayout>
 
-        <!-- RecyclerView para mostrar la lista de clientes -->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewClientes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:visibility="gone" /> <!-- Inicialmente oculto -->
+            android:visibility="gone" />
 
-            <!-- Inicialmente oculto -->
+
     </LinearLayout>
 </ScrollView>

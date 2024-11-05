@@ -10,7 +10,7 @@ import com.example.androidclubdeportivo.model.Cliente
 
 class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
 
-    // Función para insertar un cliente
+
     fun insertarCliente(cliente: Cliente): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
@@ -33,7 +33,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
         }
         val socioId = db.insert("Socios", null, values)
 
-        // Inserta la cuota asociada al socio
+
         if (socioId != -1L) {
             insertarCuota(id_cliente, cuotaFija, fechaVencimiento, estado) // Asegúrate de que esta función esté definida
         }
@@ -41,7 +41,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
         return socioId
     }
 
-    // Función para insertar una cuota
+
     fun insertarCuota(idCliente: Long, monto: Double, fechaVencimiento: String, estado: String, fechaPago: String? = null): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
@@ -55,7 +55,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
     }
 
 
-    // Función para verificar si un email ya está registrado
+
     fun isEmailRegistered(email: String): Boolean {
         val db = dbHelper.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM Clientes WHERE email = ?", arrayOf(email))
@@ -219,7 +219,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
             """, null
             )
 
-            // Imprimir los nombres de las columnas para depuración
+
             Log.d("ColumnNames", "Columnas disponibles: ${cursor.columnNames.joinToString()}")
 
             if (cursor.moveToFirst()) {
@@ -262,7 +262,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
             """, null
             )
 
-            // Imprimir los nombres de las columnas para depuración
+
             Log.d("ColumnNames", "Columnas disponibles: ${cursor.columnNames.joinToString()}")
 
             if (cursor.moveToFirst()) {

@@ -2,52 +2,59 @@ package com.example.androidclubdeportivo.controller
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidclubdeportivo.R
 
 class Home : AppCompatActivity() {
+
+    private lateinit var tvUsername: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_home)
+
+        // Initialize the TextView
+        tvUsername = findViewById(R.id.tvUsername)
+
+
+        val username = intent.getStringExtra("USERNAME") ?: ""
+        tvUsername.text = username
 
         val btnGestionClientes = findViewById<Button>(R.id.btnGestionClientes)
         btnGestionClientes.setOnClickListener {
             val intent = Intent(this, GestionCliente::class.java)
             startActivity(intent)
         }
+
         val btnGestionActividades = findViewById<Button>(R.id.btnGestionActividades)
         btnGestionActividades.setOnClickListener {
             val intent = Intent(this, GestionActividades::class.java)
             startActivity(intent)
         }
+
         val btnGestionPagos = findViewById<Button>(R.id.btnGestionPagos)
         btnGestionPagos.setOnClickListener {
             val intent = Intent(this, GestionPagos::class.java)
             startActivity(intent)
         }
+
         val imglogout = findViewById<ImageView>(R.id.logout)
         imglogout.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
         }
+
         val sucursalCerro = findViewById<LinearLayout>(R.id.sucursal_cerro)
         sucursalCerro.setOnClickListener {
             sendEmail("sucursal.cerro@example.com")
         }
 
-        // Enviar correo - Sucursal Córdoba
         val sucursalCordoba = findViewById<LinearLayout>(R.id.sucursal_cordoba)
         sucursalCordoba.setOnClickListener {
             sendEmail("sucursal.cordoba@example.com")
         }
-
-
     }
 
     private fun sendEmail(email: String) {

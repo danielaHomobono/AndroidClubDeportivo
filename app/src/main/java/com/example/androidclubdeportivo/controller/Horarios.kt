@@ -53,17 +53,15 @@ class Horarios : AppCompatActivity() {
     }
 
     private fun loadData() {
-        // Cargar todas las sedes y actividades para llenar los spinners
+
         val sedes = actividadDAO.getSedes()
         val sedeNames = listOf("Todas") + sedes.map { it["nombre"].toString() }
         val actividades = actividadDAO.getTodasLasActividades()
         val actividadNames = listOf("Todas") + actividades.map { it["nombre"].toString() }
 
-        // Configurar adaptadores para los spinners
+
         spinnerSede.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sedeNames)
         spinnerActivity.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, actividadNames)
-
-        // Obtener todos los horarios disponibles
         allHorarios = actividadDAO.getHorarios()
     }
 

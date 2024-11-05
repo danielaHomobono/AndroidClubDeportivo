@@ -32,27 +32,27 @@ class Reportes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reportes)
 
-        // Inicializa los elementos de la interfaz
+
         btnHome = findViewById(R.id.homeButton)
         recyclerView = findViewById(R.id.recyclerViewClientes)
         spinnerEstado = findViewById(R.id.spinnerEstado)
         btnMostrar = findViewById(R.id.btnMostrar)
 
-        // Inicializa el DAO
+
         clienteDAO = ClienteDAO(ClubDatabaseHelper(this))
         setupHomeButton()
 
-        // Configura el RecyclerView
+
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Inicializa el Spinner
-        val estados = arrayOf("Vencido", "Al Día") // Define los elementos del Spinner
-        val adapterSpinner =
-            ArrayAdapter(this, android.R.layout.simple_spinner_item, estados) // Crea el adaptador
-        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // Configura el estilo del dropdown
-        spinnerEstado.adapter = adapterSpinner // Asigna el adaptador al Spinner
 
-        // Configura el botón para mostrar los clientes
+        val estados = arrayOf("Vencido", "Al Día")
+        val adapterSpinner =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, estados)
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerEstado.adapter = adapterSpinner
+
+
         btnMostrar.setOnClickListener {
             try {
                 val estadoSeleccionado = spinnerEstado.selectedItem.toString()
@@ -65,9 +65,9 @@ class Reportes : AppCompatActivity() {
                 Log.d(
                     "ReportesActivity",
                     "Clientes obtenidos: ${clientes.size}"
-                ) // Log para verificar la cantidad de clientes
+                )
 
-                // Actualiza el adaptador
+
                 adapter = ClienteAdapter(clientes)
                 recyclerView.adapter = adapter
                 recyclerView.visibility = View.VISIBLE // Muestra el RecyclerView

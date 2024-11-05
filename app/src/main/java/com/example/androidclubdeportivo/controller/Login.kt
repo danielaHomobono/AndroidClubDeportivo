@@ -37,7 +37,7 @@ class Login : AppCompatActivity() {
 
         authService = AutenService(this)
 
-        val admins = listOf("dani", "vero", "roma", "emi")
+        val admins = listOf("Dani", "Vero", "Roma", "Emi")
         for (admin in admins) {
             if (!authService.isUserRegistered(admin)) {
                 val isRegistered = authService.registerUser(admin, "1234", "Admin")
@@ -84,12 +84,14 @@ class Login : AppCompatActivity() {
                     when (userType) {
                         "Admin" -> {
                             val intent = Intent(this, Home::class.java)
+                            intent.putExtra("USERNAME", username)
                             startActivity(intent)
                         }
                         "Socio" -> {
                             if (clienteId != null) {
                                 val intent = Intent(this, ImpresCarnetCliente::class.java)
                                 intent.putExtra("CLIENTE_ID", clienteId)
+                                intent.putExtra("USERNAME", username)
                                 startActivity(intent)
                             } else {
                                 Log.e(TAG, "ID de cliente no encontrado para el socio: $username")

@@ -47,18 +47,17 @@ class Profesores2 : AppCompatActivity() {
                 )
             }
 
-            // Crea un TextView para la actividad (puedes personalizar esto según tu modelo)
+
             val actividadTextView = TextView(this).apply {
-                //text = "Actividad: ${profesor.actividad}" // Asegúrate de que la clase Profesor tenga un campo para la actividad
+
                 textSize = 14f
-                //setTextColor(resources.getColor(android.R.color.darker_gray))
+
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
             }
 
-            // Agrega los TextViews al LinearLayout
             linearLayoutProfesores.addView(textView)
             linearLayoutProfesores.addView(actividadTextView)
         }

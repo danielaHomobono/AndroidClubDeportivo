@@ -24,7 +24,7 @@
             android:paddingTop="20dp"
             android:layout_marginBottom="20dp">
 
-            <!-- Texto del Header -->
+
             <TextView
                 android:id="@+id/headerTitle"
                 android:layout_width="0dp"

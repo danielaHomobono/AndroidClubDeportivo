@@ -15,23 +15,22 @@ class Reportes2 : AppCompatActivity() {
     private lateinit var headerTitle: TextView
     private lateinit var homeButton: ImageButton
     private lateinit var recyclerView: RecyclerView
-   // private lateinit var adapter: ClienteAdapter // Adaptador que crearás
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reportes2) // Asegúrate de que este sea el nombre correcto
+        setContentView(R.layout.activity_reportes2)
 
         headerTitle = findViewById(R.id.headerTitle)
         homeButton = findViewById(R.id.homeButton)
-        recyclerView = findViewById(R.id.recyclerView) // Asegúrate de tener un RecyclerView en tu layout
+        recyclerView = findViewById(R.id.recyclerView)
 
-        // Obtener la lista de clientes del Intent
+
         val clientes = intent.getSerializableExtra("clientes") as? List<Cliente> ?: emptyList()
 
         // Configurar el RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-       // adapter = ClienteAdapter(clientes)
-       // recyclerView.adapter = adapter
+
 
     }
 

@@ -46,7 +46,7 @@ class InscripcionActividad : AppCompatActivity() {
         initializeViews()
         setupHomeButton()
 
-        // Llama a insertTestSedes() solo una vez
+
         val prefs = getSharedPreferences("MiAppPrefs", MODE_PRIVATE)
         val sedesInsertadas = prefs.getBoolean("sedes_insertadas", false)
         if (!sedesInsertadas) {
@@ -54,16 +54,16 @@ class InscripcionActividad : AppCompatActivity() {
             prefs.edit().putBoolean("sedes_insertadas", true).apply()
         }
 
-        // Llama a insertarDatosDePrueba() solo una vez
+
         val datosInsertados = prefs.getBoolean("datos_prueba_insertados", false)
         if (!datosInsertados) {
-            insertarDatosDePrueba()  // Llama al método de inserción
+
             prefs.edit().putBoolean("datos_prueba_insertados", true).apply()
         }
 
         setupSpinners()
         setupValidations()
-
+        verificarActividadesEnDB()
         printActividadesYHorarios()
 
 
@@ -94,12 +94,9 @@ class InscripcionActividad : AppCompatActivity() {
         adapterDocumentType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerDocumentType.adapter = adapterDocumentType
 
-        // Configuración del spinner de sedes
-        // Configuración del spinner de sedes
-        // Configuración del spinner de sedes
-        val sedes = actividadDao.getSedes() // Llama al método getSedes en actividadDAO
+        val sedes = actividadDao.getSedes()
         val nombresSedes =
-            sedes.map { it["nombre"].toString() } // Extrae solo los nombres para el spinner
+            sedes.map { it["nombre"].toString() }
         val adapterSede = ArrayAdapter(this, android.R.layout.simple_spinner_item, nombresSedes)
         adapterSede.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSede.adapter = adapterSede
@@ -111,15 +108,15 @@ class InscripcionActividad : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                // Obtener la sede seleccionada desde la lista `sedes` usando `position`
+
                 val sedeSeleccionada = sedes[position]
                 val sedeNombre = sedeSeleccionada["nombre"].toString()
                 val idSede = sedeSeleccionada["id_sede"] as Int
 
-                // Actualiza el TextView con el nombre de la sede seleccionada
+
                 textViewSede.text = sedeNombre
 
-                // Cargar las actividades con horarios usando `idSede`
+
                 val actividadesConHorarios = actividadDao.getActividadesConHorariosBySede(idSede)
                 setupActivitySpinner(actividadesConHorarios)
             }
@@ -128,8 +125,8 @@ class InscripcionActividad : AppCompatActivity() {
         }
     }
 
-        private fun setupActivitySpinner(actividadesConHorarios: List<Map<String, Any?>>) {
-        // Mapea nombres de actividades
+    private fun setupActivitySpinner(actividadesConHorarios: List<Map<String, Any?>>) {
+
         val actividadesUnicas = actividadesConHorarios.mapNotNull { it["nombre"] as? String }.distinct()
 
         val adapterActivity = ArrayAdapter(this, android.R.layout.simple_spinner_item, actividadesUnicas)
@@ -141,7 +138,7 @@ class InscripcionActividad : AppCompatActivity() {
                 val actividadSeleccionada = parent.getItemAtPosition(position) as? String ?: return
                 textViewClase.text = actividadSeleccionada
 
-                // Obtiene el ID de la actividad, asegurándote de que sea del tipo correcto
+
                 val idActividad = obtenerIdActividad(actividadSeleccionada) ?: -1
 
                 if (idActividad != -1) {
@@ -188,30 +185,9 @@ class InscripcionActividad : AppCompatActivity() {
     }
 
 
-    private fun insertarDatosDePruebaUnaVez() {
-        val prefs = getSharedPreferences("MiAppPrefs", Context.MODE_PRIVATE)
-        val datosInsertados = prefs.getBoolean("datos_prueba_insertados", false)
 
-        if (!datosInsertados) {
-            dbHelper.insertTestSedes()  // Asegúrate de que esto se llame aquí
-            actividadDao.insertarDatosDePrueba()
-            prefs.edit().putBoolean("datos_prueba_insertados", true).apply()
-        }
-    }
 
-    private fun insertarDatosDePrueba() {
-        // Inserta una nueva actividad con id_sede 2
-        val idActividad = actividadDao.insertarActividad("Boxeo", 20, 1000.0, 1, 2)
 
-        // Inserta horarios para la nueva actividad
-        if (idActividad != -1L) {
-            actividadDao.insertarHorario(idActividad, "Lunes", "10:00", "11:00")
-            actividadDao.insertarHorario(idActividad, "Miércoles", "10:00", "11:00")
-            Log.d("ActividadDAO", "Actividad y horarios insertados correctamente")
-        } else {
-            Log.e("ActividadDAO", "Error al insertar la actividad")
-        }
-    }
 
     private fun setupValidations() {
         etDocumentNumber.addTextChangedListener(object : TextWatcher {
@@ -221,17 +197,17 @@ class InscripcionActividad : AppCompatActivity() {
                     val tipoDocumento = spinnerDocumentType.selectedItem?.toString()
                     val numeroDocumento = s.toString()
 
-                    // Obtener el cliente usando la nueva función
+
                     val cliente = clienteDAO.obtenerClientePorDocumento(tipoDocumento.toString(), numeroDocumento)
 
-                    // Actualizar el TextView con el nombre y apellido del cliente
+
                     textViewNombre.text = if (cliente != null) {
-                        "${cliente.nombre} ${cliente.apellido}" // Concatenar nombre y apellido
+                        "${cliente.nombre} ${cliente.apellido}"
                     } else {
                         "Cliente no encontrado"
                     }
                 } else {
-                    // Si el campo está vacío, limpiar el TextView
+
                     textViewNombre.text = ""
                 }
             }
@@ -295,11 +271,11 @@ class InscripcionActividad : AppCompatActivity() {
             val numeroDocumento = etDocumentNumber.text.toString()
             Log.d("InscripcionActividad", "Número de documento: $numeroDocumento")
 
-            // Usa la nueva función para obtener el cliente completo
+
             val cliente = clienteDAO.obtenerClientePorDocumento(tipoDocumento.toString(), numeroDocumento)
             Log.d("InscripcionActividad", "Cliente encontrado: ${cliente?.nombre} ${cliente?.apellido}")
 
-            // Actualiza el TextView con el nombre del cliente
+
             textViewNombre.text = cliente?.nombre ?: "Cliente no encontrado"
 
             val actividadSeleccionada = spinnerActivity.selectedItem?.toString()
@@ -312,7 +288,7 @@ class InscripcionActividad : AppCompatActivity() {
             Log.d("InscripcionActividad", "Fecha actual: $fechaActual")
 
             if (cliente != null) {
-                // Obtén el ID de la actividad y el horario usando los métodos que agregaste
+
                 val idActividad = obtenerIdActividad(actividadSeleccionada ?: "")
                 val idHorario = obtenerIdHorario(horarioSeleccionado ?: "")
 
@@ -382,5 +358,24 @@ class InscripcionActividad : AppCompatActivity() {
         }
         Log.d("InscripcionActividad", "Horario seleccionado para obtener ID: $horarioSeleccionado")
     }
+    private fun verificarActividadesEnDB() {
+        val db = dbHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM Actividades", null)
+
+        if (cursor.moveToFirst()) {
+            Log.d("DatabaseVerification", "Actividades encontradas:")
+            do {
+                val idActividad = cursor.getInt(cursor.getColumnIndexOrThrow("id_actividad"))
+                val nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"))
+                val cupo = cursor.getInt(cursor.getColumnIndexOrThrow("cupo"))
+                val precio = cursor.getDouble(cursor.getColumnIndexOrThrow("precio"))
+                Log.d("DatabaseVerification", "ID: $idActividad, Nombre: $nombre, Cupo: $cupo, Precio: $precio")
+            } while (cursor.moveToNext())
+        } else {
+            Log.d("DatabaseVerification", "No se encontraron actividades en la base de datos.")
+        }
+        cursor.close()
+    }
+
 }
 

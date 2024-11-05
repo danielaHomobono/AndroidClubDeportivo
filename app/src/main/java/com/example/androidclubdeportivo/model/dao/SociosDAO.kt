@@ -7,7 +7,7 @@ import com.example.androidclubdeportivo.model.Socio
 
 class SociosDAO(private val dbHelper: ClubDatabaseHelper) {
 
-    // Función para inscribir un nuevo socio
+
     fun inscribirSocio(idCliente: Int, cuotaFija: Double): Long {
         val db: SQLiteDatabase = dbHelper.writableDatabase
         val values = ContentValues().apply {
@@ -17,7 +17,7 @@ class SociosDAO(private val dbHelper: ClubDatabaseHelper) {
         return db.insert("Socios", null, values)
     }
 
-    // Función para obtener la cuota fija de un socio
+
     fun obtenerCuotaFija(idCliente: Int): Double {
         val db: SQLiteDatabase = dbHelper.readableDatabase
         val cursor: Cursor = db.query(

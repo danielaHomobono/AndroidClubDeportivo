@@ -66,17 +66,7 @@ class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
         }
     }
 
-    fun insertarProfesor(nombre: String, apellido: String, documento: String, telefono: String?, email: String?): Long {
-        val db = dbHelper.writableDatabase
-        val contentValues = ContentValues().apply {
-            put("nombre", nombre)
-            put("apellido", apellido)
-            put("documento", documento)
-            put("telefono", telefono)
-            put("email", email)
-        }
-        return db.insert("Profesores", null, contentValues)
-    }
+
 
     fun getProfesores(): List<Profesor> {
         val db = dbHelper.readableDatabase
@@ -97,18 +87,7 @@ class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
         return profesores
     }
 
-    fun getActividadIdPorNombre(nombre: String): Int? {
-        val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT id_actividad FROM Actividades WHERE nombre = ?", arrayOf(nombre))
 
-        return if (cursor.moveToFirst()) {
-            cursor.getInt(cursor.getColumnIndexOrThrow("id_actividad"))
-        } else {
-            null
-        }.also {
-            cursor.close()
-        }
-    }
 
     fun getProfesoresByActividad(idActividad: Int): List<Profesor> {
         val db = dbHelper.readableDatabase

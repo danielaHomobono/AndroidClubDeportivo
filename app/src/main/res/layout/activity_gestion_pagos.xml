@@ -42,7 +42,7 @@
 
         </LinearLayout>
 
-        <!-- Home Image -->
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -50,7 +50,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/pagos"/>
 
-        <!-- Buttons Container -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -86,7 +85,7 @@
 
         </LinearLayout>
 
-        <!-- Footer -->
+
         <LinearLayout
             android:id="@+id/footer"
             android:layout_width="match_parent"

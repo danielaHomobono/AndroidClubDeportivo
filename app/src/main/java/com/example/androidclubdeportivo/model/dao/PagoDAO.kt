@@ -21,7 +21,7 @@ class PagoDAO(private val dbHelper: ClubDatabaseHelper) {
         return db.insert("Pagos", null, values)
     }
 
-    // Función para obtener todos los pagos (opcional)
+    // Función que al final no usamos)
     fun getAllPagos(): List<Pago> {
         val db = dbHelper.readableDatabase
         val cursor: Cursor = db.query("Pagos", null, null, null, null, null, null)
@@ -40,7 +40,7 @@ class PagoDAO(private val dbHelper: ClubDatabaseHelper) {
         return pagosList
     }
 
-    // Función para obtener pagos por id_inscripcion (opcional)
+    // Función que al final no usamos)
     fun getPagosByInscripcion(idInscripcion: Int): List<Pago> {
         val db = dbHelper.readableDatabase
         val cursor: Cursor = db.query(

@@ -12,7 +12,7 @@ data class Cliente(
         val telefono: String?,
         val email: String?,
         val direccion: String?,
-        val fechaUltimoPago: String? // Agregar esta propiedad
+        val fechaUltimoPago: String?
 
     ): Serializable
 

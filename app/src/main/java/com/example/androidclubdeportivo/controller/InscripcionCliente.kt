@@ -1,6 +1,7 @@
 package com.example.androidclubdeportivo.controller
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,10 +15,13 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Patterns
+import android.view.View
+import android.widget.TextView
 import com.example.androidclubdeportivo.model.dao.ClubDatabaseHelper
 import com.example.androidclubdeportivo.R
 import com.example.androidclubdeportivo.model.Cliente
 import com.example.androidclubdeportivo.model.dao.ClienteDAO
+import com.google.android.material.snackbar.Snackbar
 
 class InscripcionCliente : AppCompatActivity() {
 
@@ -35,6 +39,7 @@ class InscripcionCliente : AppCompatActivity() {
     private lateinit var cbPresentoFichaMedica: CheckBox
     private lateinit var btnSubscribe: Button
     private lateinit var btnHome: ImageButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +67,8 @@ class InscripcionCliente : AppCompatActivity() {
         cbPresentoFichaMedica = findViewById(R.id.cbPresentoFichaMedica)
         btnSubscribe = findViewById(R.id.btnSubscribe)
         btnHome = findViewById(R.id.homeButton)
+
+
     }
 
     private fun setupSpinner() {
@@ -92,59 +99,72 @@ class InscripcionCliente : AppCompatActivity() {
         btnSubscribe.setOnClickListener {
             if (validateForm()) {
                 if (!cbPresentoFichaMedica.isChecked) {
-                    Toast.makeText(
-                        this,
+                    // Muestra el Snackbar si no marcamos el checkbox.
+                    Snackbar.make(
+                        findViewById(android.R.id.content),
                         "Debe presentar la ficha médica en los próximos días",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                val cliente = Cliente(
-                    nombre = etFirstName.text.toString().trim(),
-                    apellido = etLastName.text.toString().trim(),
-                    documento = etDocumentNumber.text.toString().trim(),
-                    tipo_documento = spinnerDocumentType.selectedItem.toString(),
-                    telefono = etPhoneNumber.text.toString().trim(),
-                    email = etEmail.text.toString().trim(),
-                    direccion = null,
-                    fechaUltimoPago = "01/01/2024" // Asigna un valor adecuado
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setBackgroundTint(Color.parseColor("#A3B4D3"))
+                        .setTextColor(Color.WHITE)
+                        .show()
 
-                )
 
-                try {
-                    Log.d("InscripcionCliente", "Intentando insertar cliente")
-                    val idCliente = clienteDAO.insertarCliente(cliente)
-                    Log.d("InscripcionCliente", "ID del cliente insertado: $idCliente")
-
-                    if (idCliente != -1L) {
-                        if (cbInscribirSocio.isChecked) {
-                            Log.d("InscripcionCliente", "Intentando inscribir socio")
-                            val idSocio = clienteDAO.inscribirSocio(idCliente, 20000.0, "2024-12-31", "Al día") // Asegúrate de pasar el estado y la fecha de vencimiento
-                            Log.d("InscripcionCliente", "ID del socio inscrito: $idSocio")
-                            if (idSocio == -1L) {
-                                throw Exception("Error al registrar socio")
-                            }
-                        }
-
-                        Log.d("InscripcionCliente", "Intentando insertar usuario")
-                        val idUsuario = dbHelper.insertUsuario(cliente.email!!, etPassword.text.toString().trim(), "Cliente", idCliente)
-                        Log.d("InscripcionCliente", "ID del usuario insertado: $idUsuario")
-                        if (idUsuario != -1L) {
-                            Toast.makeText(this, "Cliente y usuario registrados con éxito", Toast.LENGTH_SHORT).show()
-                            finish()
-                        } else {
-                            throw Exception("Error al crear usuario")
-                        }
-                    } else {
-                        throw Exception("Error al registrar cliente")
-                    }
-                } catch (e: Exception) {
-                    Log.e("InscripcionCliente", "Error en el proceso de registro", e)
-                    Toast.makeText(this, e.message ?: "Error desconocido", Toast.LENGTH_SHORT).show()
-                    e.printStackTrace()
+                    btnSubscribe.postDelayed({
+                        realizarInscripcion()
+                    }, 3000) // Lo demoramos 3 segundos para que se llegue a ver
+                } else {
+                    // Si el checkbox está marcado, realiza la inscripción sin demora
+                    realizarInscripcion()
                 }
             }
         }
+
     }
+
+        fun realizarInscripcion() {
+            val cliente = Cliente(
+                nombre = etFirstName.text.toString().trim(),
+                apellido = etLastName.text.toString().trim(),
+                documento = etDocumentNumber.text.toString().trim(),
+                tipo_documento = spinnerDocumentType.selectedItem.toString(),
+                telefono = etPhoneNumber.text.toString().trim(),
+                email = etEmail.text.toString().trim(),
+                direccion = null,
+                fechaUltimoPago = "01/01/2024"
+            )
+
+            try {
+                val idCliente = clienteDAO.insertarCliente(cliente)
+                if (idCliente != -1L) {
+                    if (cbInscribirSocio.isChecked) {
+                        val idSocio =
+                            clienteDAO.inscribirSocio(idCliente, 20000.0, "2024-12-31", "Al día")
+                        if (idSocio == -1L) throw Exception("Error al registrar socio")
+                    }
+
+                    val idUsuario = dbHelper.insertUsuario(
+                        cliente.email!!,
+                        etPassword.text.toString().trim(),
+                        "Cliente",
+                        idCliente
+                    )
+                    if (idUsuario != -1L) {
+                        Toast.makeText(this, "Cliente registrado con éxito", Toast.LENGTH_SHORT)
+                            .show()
+                        finish()
+                    } else {
+                        throw Exception("Error al crear usuario")
+                    }
+                } else {
+                    throw Exception("Error al registrar cliente")
+                }
+            } catch (e: Exception) {
+                Log.e("InscripcionCliente", "Error en el proceso de registro", e)
+                Toast.makeText(this, e.message ?: "Error desconocido", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
     private fun setupHomeButton() {
         btnHome.setOnClickListener {

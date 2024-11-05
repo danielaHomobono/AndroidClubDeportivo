@@ -15,8 +15,8 @@ data class HorarioActividad(
     val diaSemana: String,
     val horaInicio: String,
     val horaFin: String,
-    val sede: String, // Nueva propiedad para la sede
-    val actividad: String // Nueva propiedad para la actividad
+    val sede: String,
+    val actividad: String
 )
 data class Profesor(
     val id: Int? = null,
