@@ -1,6 +1,7 @@
 package com.example.androidclubdeportivo.controller
 
 //import Reportes
+
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
@@ -31,7 +32,7 @@ class GestionPagos : AppCompatActivity() {
 
         homeButton.setOnClickListener {
 
-            val intent = Intent(this, Home::class.java) // Replace MainActivity with your actual home activity
+            val intent = Intent(this, Home::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }

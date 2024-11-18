@@ -95,8 +95,16 @@ class InscripcionActividad : AppCompatActivity() {
         spinnerDocumentType.adapter = adapterDocumentType
 
         val sedes = actividadDao.getSedes()
-        val nombresSedes =
-            sedes.map { it["nombre"].toString() }
+        Log.d("InscripcionActividad", "Sedes retrieved: ${sedes.size}")
+        var nombresSedes = sedes.map { it["nombre"].toString() }
+        Log.d("InscripcionActividad", "Nombres de sedes: $nombresSedes")
+
+        if (nombresSedes.isEmpty()) {
+            Log.e("InscripcionActividad", "No se encontraron sedes")
+            // Optionally, add a default value or show an error message
+            nombresSedes = listOf("No hay sedes disponibles")
+        }
+
         val adapterSede = ArrayAdapter(this, android.R.layout.simple_spinner_item, nombresSedes)
         adapterSede.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSede.adapter = adapterSede

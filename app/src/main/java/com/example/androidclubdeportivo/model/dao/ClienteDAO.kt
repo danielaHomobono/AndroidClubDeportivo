@@ -6,6 +6,10 @@ import android.util.Log
 import androidx.core.database.getIntOrNull
 import androidx.core.database.getStringOrNull
 import com.example.androidclubdeportivo.model.Cliente
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
@@ -25,7 +29,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
         return db.insert("Clientes", null, values)
     }
 
-    fun inscribirSocio(id_cliente: Long, cuotaFija: Double, fechaVencimiento: String, estado: String): Long {
+    fun inscribirSocio(id_cliente: Long, cuotaFija: Double): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("id_cliente", id_cliente)
@@ -33,23 +37,30 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
         }
         val socioId = db.insert("Socios", null, values)
 
-
         if (socioId != -1L) {
-            insertarCuota(id_cliente, cuotaFija, fechaVencimiento, estado) // Asegúrate de que esta función esté definida
+            val fechaHoy = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+            val fechaVencimiento = calcularFechaVencimiento(fechaHoy)
+            insertarCuota(id_cliente, cuotaFija, fechaVencimiento, "Vencido") // Cambiado a "Vencido"
         }
 
         return socioId
     }
+    fun calcularFechaVencimiento(fechaInicio: String): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val fechaActual = Date()
+        return sdf.format(fechaActual)
+    }
 
 
-    fun insertarCuota(idCliente: Long, monto: Double, fechaVencimiento: String, estado: String, fechaPago: String? = null): Long {
+
+
+    fun insertarCuota(idCliente: Long, monto: Double, fechaVencimiento: String, estado: String): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("id_cliente", idCliente)
             put("monto", monto)
             put("fecha_vencimiento", fechaVencimiento)
             put("estado", estado)
-            put("fecha_pago", fechaPago) // Puede ser nulo
         }
         return db.insert("Cuotas", null, values)
     }
@@ -95,7 +106,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
             null,
             null,
             null,
-            "nombre ASC"  // Ordenar por nombre ascendente
+            "nombre ASC"
         )
 
         while (cursor.moveToNext()) {
@@ -177,7 +188,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
 
     fun obtenerClientePorDocumento(tipoDocumento: String, numeroDocumento: String): Cliente? {
         val clienteId = getClienteByDocumento(tipoDocumento, numeroDocumento)
-        return clienteId?.let { getClienteById(it) } // Llama a getClienteById para obtener el objeto Cliente completo
+        return clienteId?.let { getClienteById(it) } // Llama a getClienteById para obtener  Cliente completo
     }
 
     fun searchClientesByApellido(apellido: String): List<Cliente> {
@@ -186,7 +197,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
             "Clientes",
             null,
             "apellido LIKE ?",
-            arrayOf("$apellido%"), // Changed to start with the input
+            arrayOf("$apellido%"),
             null,
             null,
             "apellido ASC"
@@ -207,18 +218,17 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
     fun getClientesAlDia(): List<Cliente> {
         val clientes = mutableListOf<Cliente>()
         val db = dbHelper.readableDatabase
-        var cursor: Cursor? = null // Inicializar como null
+        var cursor: Cursor? = null
 
         try {
             cursor = db.rawQuery(
                 """
-            SELECT c.id_cliente, c.nombre, c.apellido, c.documento, c.tipo_documento, c.telefono, c.email, c.direccion
+            SELECT c.id_cliente, c.nombre, c.apellido, c.documento, c.tipo_documento, c.telefono, c.email, c.direccion, cu.fecha_vencimiento AS fechaUltimoPago
             FROM Clientes c
             JOIN Cuotas cu ON c.id_cliente = cu.id_cliente
             WHERE cu.estado = 'Al día'
             """, null
             )
-
 
             Log.d("ColumnNames", "Columnas disponibles: ${cursor.columnNames.joinToString()}")
 
@@ -230,10 +240,10 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
                         apellido = cursor.getString(cursor.getColumnIndexOrThrow("apellido")),
                         documento = cursor.getString(cursor.getColumnIndexOrThrow("documento")),
                         tipo_documento = cursor.getString(cursor.getColumnIndexOrThrow("tipo_documento")),
-                        telefono = cursor.getStringOrNull(cursor.getColumnIndex("telefono")), // Manejo de nulos
-                        email = cursor.getStringOrNull(cursor.getColumnIndex("email")), // Manejo de nulos
+                        telefono = cursor.getStringOrNull(cursor.getColumnIndex("telefono")),
+                        email = cursor.getStringOrNull(cursor.getColumnIndex("email")),
                         direccion = cursor.getStringOrNull(cursor.getColumnIndex("direccion")),
-                        fechaUltimoPago = cursor.getStringOrNull(cursor.getColumnIndex("fechaUltimoPago")) // Manejo de nulos
+                        //fechaUltimoPago = cursor.getStringOrNull(cursor.getColumnIndex("fechaUltimoPago"))
                     )
                     clientes.add(cliente)
                 } while (cursor.moveToNext())
@@ -241,16 +251,17 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
         } catch (e: Exception) {
             Log.e("ClienteDAO", "Error al obtener clientes al día: ${e.message}")
         } finally {
-            cursor?.close() // Cerrar el cursor si no es nulo
+            cursor?.close()
         }
 
         return clientes
     }
 
+
     fun getClientesConCuotasVencidas(): List<Cliente> {
         val clientes = mutableListOf<Cliente>()
         val db = dbHelper.readableDatabase
-        var cursor: Cursor? = null // Inicializar como null
+        var cursor: Cursor? = null
 
         try {
             cursor = db.rawQuery(
@@ -262,21 +273,27 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
             """, null
             )
 
-
             Log.d("ColumnNames", "Columnas disponibles: ${cursor.columnNames.joinToString()}")
 
             if (cursor.moveToFirst()) {
                 do {
+                    val fechaUltimoPagoColumnIndex = cursor.getColumnIndex("fechaUltimoPago")
+                    val fechaUltimoPago = if (fechaUltimoPagoColumnIndex != -1) {
+                        cursor.getStringOrNull(fechaUltimoPagoColumnIndex)
+                    } else {
+                        null
+                    }
+
                     val cliente = Cliente(
                         id_cliente = cursor.getInt(cursor.getColumnIndexOrThrow("id_cliente")),
                         nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
                         apellido = cursor.getString(cursor.getColumnIndexOrThrow("apellido")),
                         documento = cursor.getString(cursor.getColumnIndexOrThrow("documento")),
                         tipo_documento = cursor.getString(cursor.getColumnIndexOrThrow("tipo_documento")),
-                        telefono = cursor.getStringOrNull(cursor.getColumnIndex("telefono")), // Manejo de nulos
-                        email = cursor.getStringOrNull(cursor.getColumnIndex("email")), // Manejo de nulos
+                        telefono = cursor.getStringOrNull(cursor.getColumnIndex("telefono")),
+                        email = cursor.getStringOrNull(cursor.getColumnIndex("email")),
                         direccion = cursor.getStringOrNull(cursor.getColumnIndex("direccion")),
-                        fechaUltimoPago = cursor.getStringOrNull(cursor.getColumnIndex("fechaUltimoPago")) // Manejo de nulos
+                        //fechaUltimoPago = fechaUltimoPago // Asignar el valor verificado
                     )
                     clientes.add(cliente)
                 } while (cursor.moveToNext())
@@ -284,7 +301,39 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
         } catch (e: Exception) {
             Log.e("ClienteDAO", "Error al obtener clientes vencidos: ${e.message}")
         } finally {
-            cursor?.close() // Cerrar el cursor si no es nulo
+            cursor?.close()
+        }
+
+        return clientes
+    }
+    fun getClientesConCuotasVencenHoy(): List<Cliente> {
+        val clientes = mutableListOf<Cliente>()
+        val db = dbHelper.readableDatabase
+        val fechaHoy = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        var cursor: Cursor? = null
+
+        try {
+            cursor = db.rawQuery(
+                """
+            SELECT DISTINCT c.id_cliente, c.nombre, c.apellido, c.documento, c.tipo_documento, c.telefono, c.email, c.direccion
+            FROM Clientes c
+            JOIN Cuotas cu ON c.id_cliente = cu.id_cliente
+            WHERE cu.fecha_vencimiento = ?
+            """, arrayOf(fechaHoy)
+            )
+
+            Log.d("ColumnNames", "Columnas disponibles: ${cursor.columnNames.joinToString()}")
+
+            if (cursor.moveToFirst()) {
+                do {
+                    val cliente = cursorToCliente(cursor)
+                    clientes.add(cliente)
+                } while (cursor.moveToNext())
+            }
+        } catch (e: Exception) {
+            Log.e("ClienteDAO", "Error al obtener clientes con cuotas que vencen hoy: ${e.message}")
+        } finally {
+            cursor?.close()
         }
 
         return clientes
@@ -299,14 +348,7 @@ class ClienteDAO(private val dbHelper: ClubDatabaseHelper) {
             telefono = cursor.getStringOrNull(cursor.getColumnIndex("telefono")),
             email = cursor.getStringOrNull(cursor.getColumnIndex("email")),
             direccion = cursor.getStringOrNull(cursor.getColumnIndex("direccion")),
-            fechaUltimoPago = cursor.getStringOrNull(cursor.getColumnIndex("fechaUltimoPago")) // Asegúrate de que esta columna exista
+            //fechaUltimoPago = cursor.getStringOrNull(cursor.getColumnIndex("fecha-Pago"))
         )
     }
 }
-
-
-
-
-
-
-

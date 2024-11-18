@@ -155,7 +155,7 @@ class ModificacionCliente : AppCompatActivity() {
                     telefono = etPhoneNumber.text.toString().trim(),
                     email = etEmail.text.toString().trim(),
                     direccion = null ,
-                    fechaUltimoPago = "01/01/2024"
+                    //fechaUltimoPago = "01/01/2024"
 
                 )
 

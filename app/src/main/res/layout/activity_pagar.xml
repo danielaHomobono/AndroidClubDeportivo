@@ -86,6 +86,8 @@
                 android:popupBackground="#FFFFFF"
                 android:spinnerMode="dropdown" />
 
+
+
             <Spinner
                 android:id="@+id/spinnerTipoCuota"
                 android:layout_width="match_parent"
@@ -94,9 +96,40 @@
                 android:background="@drawable/custom_spinner_background"
                 android:fontFamily="@font/montserrat_semibold"
                 android:padding="15dp"
-                android:popupBackground="#FFFFFF"
+                android:popupBackground="#A3B4D3"
                 android:spinnerMode="dropdown"
                 android:visibility="gone"/>
+            <RadioGroup
+                android:id="@+id/radioGroupCuotas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="16dp"
+                android:visibility="gone"
+                >
+
+                <RadioButton
+                    android:id="@+id/radioButton1Cuota"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 Cuota"
+                    android:textColor="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/radioButton3Cuotas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3 Cuotas"
+                    android:textColor="#1B2B5B" />
+
+                <RadioButton
+                    android:id="@+id/radioButton6Cuotas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6 Cuotas"
+                    android:textColor="#1B2B5B" />
+            </RadioGroup>
 
 
             <TextView
@@ -117,19 +150,20 @@
                 android:orientation="vertical"
                 android:padding="15dp"
                 app:cardBackgroundColor="#A3B4D3"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="20dp"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical">                    >
 
                     <TextView
                         android:id="@+id/textViewNombre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="Nombre del Cliente"
                         android:textColor="#FFFFFF"

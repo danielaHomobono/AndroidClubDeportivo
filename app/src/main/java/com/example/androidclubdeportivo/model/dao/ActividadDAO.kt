@@ -6,6 +6,12 @@ import android.util.Log
 import com.example.androidclubdeportivo.model.Profesor
 import com.example.androidclubdeportivo.model.HorarioActividad
 import com.example.androidclubdeportivo.model.Actividad
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+
+
 
 class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
 
@@ -137,6 +143,8 @@ class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
         val cursor = db.rawQuery(query, null)
         val sedes = mutableListOf<Map<String, Any?>>()
 
+        Log.d("ActividadDAO", "Executing getSedes query: $query")
+
         while (cursor.moveToNext()) {
             val sede = mutableMapOf<String, Any?>()
             sede["id_sede"] = cursor.getInt(cursor.getColumnIndexOrThrow("id_sede"))
@@ -144,6 +152,8 @@ class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
             sedes.add(sede)
         }
         cursor.close()
+
+        Log.d("ActividadDAO", "Retrieved ${sedes.size} sedes")
         return sedes
     }
     fun getHorarios(): List<HorarioActividad> {
@@ -244,18 +254,6 @@ class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
         return actividadesConHorarios
     }
 
-    fun insertarCuotaPorActividad(idCliente: Long, monto: Double, fechaVencimiento: String, estado: String): Long {
-        val db = dbHelper.writableDatabase
-        val values = ContentValues().apply {
-            put("id_cliente", idCliente)
-            put("monto", monto)
-            put("fecha_vencimiento", fechaVencimiento)
-            put("estado", estado)
-            putNull("fecha_pago")
-        }
-        return db.insert("Cuotas", null, values)
-    }
-
     fun inscribirClienteEnActividad(
         clienteId: Int?,
         idActividad: Int,
@@ -263,33 +261,82 @@ class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
         fecha: String
     ): Long {
         val db = dbHelper.writableDatabase
+        db.beginTransaction()
+        try {
+            val values = ContentValues().apply {
+                put("id_cliente", clienteId)
+                put("id_actividad", idActividad)
+                put("id_horario", idHorario)
+                put("fecha", fecha)
+            }
 
-        val costoActividad = obtenerPrecioActividad(idActividad)
-
-        val values = ContentValues().apply {
-            put("id_cliente", clienteId)
-            put("id_actividad", idActividad)
-            put("id_horario", idHorario)
-            put("fecha", fecha)
-        }
-
-        return try {
             val idInscripcion = db.insert("Inscripciones", null, values)
             Log.d("ActividadDAO", "Inscripción realizada con ID: $idInscripcion")
 
-            if (idInscripcion != -1L) {
-                val resultadoCuota = insertarCuotaPorActividad(clienteId!!.toLong(), costoActividad, "2024-12-31", "Al día")
-                if (resultadoCuota == -1L) {
-                    throw Exception("Error al registrar cuota para la actividad con ID: $idActividad")
+            if (idInscripcion != -1L && clienteId != null) {
+                val sociosDAO = SociosDAO(dbHelper)
+                val esSocio = sociosDAO.esSocio(clienteId)
+
+                if (!esSocio) {
+                    val costoActividad = obtenerPrecioActividad(idActividad)
+                    val fechaVencimiento = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()) // Fecha de vencimiento es la fecha actual
+
+                    val cuotaValues = ContentValues().apply {
+                        put("id_cliente", clienteId)
+                        put("monto", costoActividad)
+                        put("fecha_vencimiento", fechaVencimiento)
+                        put("estado", "Vencido")
+                    }
+                    val idCuota = db.insert("Cuotas", null, cuotaValues)
+                    if (idCuota == -1L) {
+                        throw Exception("Error al registrar cuota para la actividad con ID: $idActividad")
+                    }
                 }
             }
 
-            idInscripcion
+            db.setTransactionSuccessful()
+            return idInscripcion
         } catch (e: Exception) {
             Log.e("ActividadDAO", "Error al inscribir cliente en actividad", e)
-            -1
+            return -1
+        } finally {
+            db.endTransaction()
         }
     }
+
+
+
+
+    fun insertarCuotaPorActividad(
+        idCliente: Long,
+        monto: Double,
+        fechaVencimiento: String,
+        estado: String
+    ): Long {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put("id_cliente", idCliente)
+            put("monto", monto)
+            put("fecha_vencimiento", fechaVencimiento)
+            put("estado", estado)
+
+            // Establecemos la fecha_pago si el estado es "Al día" o "Pagado"
+            if (estado.equals("Al día", ignoreCase = true) || estado.equals("Pagado", ignoreCase = true)) {
+                put("fecha_pago", SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()))
+            } else {
+                putNull("fecha_pago")
+            }
+        }
+
+        val id = db.insert("Cuotas", null, values)
+        if (id != -1L) {
+            Log.d("ActividadDAO", "Cuota insertada con éxito. ID: $id")
+        } else {
+            Log.e("ActividadDAO", "Error al insertar cuota")
+        }
+        return id
+    }
+
 
     private fun obtenerPrecioActividad(idActividad: Int): Double {
         val db = dbHelper.readableDatabase
@@ -312,38 +359,7 @@ class ActividadDAO(private val dbHelper: ClubDatabaseHelper) {
         }
     }
 
-    fun insertarDatosDePrueba() {
-        val db = dbHelper.writableDatabase
 
-        db.delete("Actividades", null, null)
-        db.delete("HorariosActividad", null, null)
-
-        val actividades = listOf(
-            "Tenis", "Yoga", "Pilates", "Spinning", "Zumba", "Boxeo", "Basquet"
-        )
-
-        for (actividad in actividades) {
-            val values = ContentValues().apply {
-                put("nombre", actividad)
-                put("cupo", 20)
-                put("precio", 1000.0)
-                put("id_profesor", 1)
-                put("id_sede", 1)
-            }
-            val idActividad = db.insert("Actividades", null, values)
-
-            val dias = listOf("Lunes", "Miércoles")
-            for (dia in dias) {
-                val horarioValues = ContentValues().apply {
-                    put("id_actividad", idActividad)
-                    put("dia_semana", dia)
-                    put("hora_inicio", "10:00")
-                    put("hora_fin", "11:00")
-                }
-                db.insert("HorariosActividad", null, horarioValues)
-            }
-        }
-
-        Log.d("ActividadDAO", "Actividades y horarios de prueba insertados")
-    }
 }
+
+

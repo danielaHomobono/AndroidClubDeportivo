@@ -161,7 +161,7 @@ class ClubDatabaseHelper(context: Context) :
         """
         )
 
-        // Insert initial data
+
         insertInitialSedes(db)
         insertInitialProfesores(db)
         insertInitialActividades(db)
@@ -193,19 +193,19 @@ class ClubDatabaseHelper(context: Context) :
 
     private fun insertInitialSedes(db: SQLiteDatabase) {
         val sedes = listOf(
-            Pair(3, "Sucursal Cerro"),
-            Pair(4, "Sucursal Córdoba")
+            "Sucursal Cerro",
+            "Sucursal Córdoba"
         )
 
-        for ((id, nombre) in sedes) {
+        for (nombre in sedes) {
             val values = ContentValues().apply {
-                put("id_sede", id)
                 put("nombre", nombre)
                 put("direccion", "Dirección de $nombre")
             }
             db.insert("Sedes", null, values)
         }
     }
+
 
     private fun insertInitialProfesores(db: SQLiteDatabase) {
         val profesores = listOf(
@@ -314,7 +314,7 @@ class ClubDatabaseHelper(context: Context) :
             val passwordIndex = cursor.getColumnIndex("password")
             val tipoUsuarioIndex = cursor.getColumnIndex("tipo_usuario")
 
-            // Verificación de que los índices son válidos (diferentes de -1)
+            // Verificamos que los índices son válidos (diferentes de -1)
             if (idIndex != -1 && emailIndex != -1 && passwordIndex != -1 && tipoUsuarioIndex != -1) {
                 val id = cursor.getLong(idIndex)
                 val email = cursor.getString(emailIndex)

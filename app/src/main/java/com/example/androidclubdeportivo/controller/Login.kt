@@ -37,7 +37,7 @@ class Login : AppCompatActivity() {
 
         authService = AutenService(this)
 
-        val admins = listOf("Dani", "Vero", "Roma", "Emi")
+        val admins = listOf("Dani", "Vero", "Roma", "Emi", "Kevin")
         for (admin in admins) {
             if (!authService.isUserRegistered(admin)) {
                 val isRegistered = authService.registerUser(admin, "1234", "Admin")

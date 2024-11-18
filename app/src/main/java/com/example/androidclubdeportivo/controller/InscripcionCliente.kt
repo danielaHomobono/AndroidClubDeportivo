@@ -112,7 +112,7 @@ class InscripcionCliente : AppCompatActivity() {
 
                     btnSubscribe.postDelayed({
                         realizarInscripcion()
-                    }, 3000) // Lo demoramos 3 segundos para que se llegue a ver
+                    }, 2000) // Lo demoramos 3 segundos para que se llegue a ver
                 } else {
                     // Si el checkbox está marcado, realiza la inscripción sin demora
                     realizarInscripcion()
@@ -122,49 +122,50 @@ class InscripcionCliente : AppCompatActivity() {
 
     }
 
-        fun realizarInscripcion() {
-            val cliente = Cliente(
-                nombre = etFirstName.text.toString().trim(),
-                apellido = etLastName.text.toString().trim(),
-                documento = etDocumentNumber.text.toString().trim(),
-                tipo_documento = spinnerDocumentType.selectedItem.toString(),
-                telefono = etPhoneNumber.text.toString().trim(),
-                email = etEmail.text.toString().trim(),
-                direccion = null,
-                fechaUltimoPago = "01/01/2024"
-            )
+    fun realizarInscripcion() {
+        val cliente = Cliente(
+            nombre = etFirstName.text.toString().trim(),
+            apellido = etLastName.text.toString().trim(),
+            documento = etDocumentNumber.text.toString().trim(),
+            tipo_documento = spinnerDocumentType.selectedItem.toString(),
+            telefono = etPhoneNumber.text.toString().trim(),
+            email = etEmail.text.toString().trim(),
+            direccion = null
+        )
 
-            try {
-                val idCliente = clienteDAO.insertarCliente(cliente)
-                if (idCliente != -1L) {
-                    if (cbInscribirSocio.isChecked) {
-                        val idSocio =
-                            clienteDAO.inscribirSocio(idCliente, 20000.0, "2024-12-31", "Al día")
-                        if (idSocio == -1L) throw Exception("Error al registrar socio")
-                    }
+        try {
+            val idCliente = clienteDAO.insertarCliente(cliente)
+            if (idCliente != -1L) {
+                var mensajeExito = "Cliente registrado con éxito"
 
-                    val idUsuario = dbHelper.insertUsuario(
-                        cliente.email!!,
-                        etPassword.text.toString().trim(),
-                        "Cliente",
-                        idCliente
-                    )
-                    if (idUsuario != -1L) {
-                        Toast.makeText(this, "Cliente registrado con éxito", Toast.LENGTH_SHORT)
-                            .show()
-                        finish()
-                    } else {
-                        throw Exception("Error al crear usuario")
+                if (cbInscribirSocio.isChecked) {
+                    val idSocio = clienteDAO.inscribirSocio(idCliente, 20000.0)
+                    if (idSocio == -1L) {
+                        throw Exception("Error al registrar socio")
                     }
-                } else {
-                    throw Exception("Error al registrar cliente")
+                    mensajeExito += " como socio"
                 }
-            } catch (e: Exception) {
-                Log.e("InscripcionCliente", "Error en el proceso de registro", e)
-                Toast.makeText(this, e.message ?: "Error desconocido", Toast.LENGTH_SHORT).show()
-            }
-        }
 
+                val idUsuario = dbHelper.insertUsuario(
+                    cliente.email!!,
+                    etPassword.text.toString().trim(),
+                    "Cliente",
+                    idCliente
+                )
+                if (idUsuario != -1L) {
+                    Toast.makeText(this, mensajeExito, Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    throw Exception("Error al crear usuario")
+                }
+            } else {
+                throw Exception("Error al registrar cliente")
+            }
+        } catch (e: Exception) {
+            Log.e("InscripcionCliente", "Error en el proceso de registro", e)
+            Toast.makeText(this, e.message ?: "Error desconocido", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     private fun setupHomeButton() {
         btnHome.setOnClickListener {
